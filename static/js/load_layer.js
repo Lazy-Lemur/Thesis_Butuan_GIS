@@ -149,5 +149,137 @@ function load_layer() {
         };
     
     });
+
+    geojson = new ol.layer.Vector({
+        title: 'Layer 1 '+value_param+'('+start_date+' to '+end_date+')',
+            source: new ol.source.Vector({
+            url: url_poly,
+            format: new ol.format.GeoJSON()
+            }),
+            style: function (feature, resolution) {
+                return getStyle1(feature, resolution);
+            }
+    });
+           
+    geojson.getSource().on('addfeature', function(){
+        map.getView().fit(
+           geojson.getSource().getExtent(),
+           { duration: 000, size: map.getSize() }
+        );
+    });
+    
+    overlays.getLayers().push(geojson);
+           //map.addLayer(geojson);		
+    layerSwitcher.renderPanel();
+    geojson_point = new ol.layer.Vector({
+        title: 'Layer '+value_param+'('+start_date+' to '+end_date+')_circle',
+             source: new ol.source.Vector({
+                url: url_point,
+             format: new ol.format.GeoJSON()
+             }),
+             style: function (feature, resolution) {
+                return getStyle2(feature, resolution);
+            }
+    });
+           
+    geojson_point.getSource().on('addfeature', function(){
+       map.getView().fit(
+           geojson_point.getSource().getExtent(),
+           { duration: 000, size: map.getSize() }
+       );
+    });
+           
+    overlays.getLayers().push(geojson_point);
+           //map.addLayer(geojson_point);
+    layerSwitcher.renderPanel();
+
+    var url_bxu_year_cumalative = "../dbase/bxu_butuan_cumulative_per_year.jsp";
+    url_bxu_year_cumulative += "?parameter="+value_param;
+
+    $.getJSON(url_bxu_year_cumulative, function(data){
+        var date = [];
+                var score = [];
+                var date_to_score = Object();
+                var score1 = [];
+                var score2 = [];
+                for(var i in data) {
+                    date.push(data[i].year);
+                    score.push(data[i][value_param]);
+                    console.log(score);
+                    date_to_score[data[i].year] = data[i][value_param];
+                    //score1.push(data[i].production);
+                    //score2.push(data[i].yield);
+                    //alert(i);
+                   
+                }
+                date.sort(function(a,b){
+                    a = a.split('-').reverse().join('');
+                    b = b.split('-').reverse().join('');
+                    return a > b ? 1 : a < b ? -1 : 0;
+                })
+                console.log(score);
+                // date = date.map(date => new Date(date));
+                
+                var chartdata = {
+                    labels: date,
+                    datasets : [
+                        {
+                            label: 'Butuan '+value_param,
+                            backgroundColor: 'rgba(255, 0, 0, 1)',
+                            borderColor: 'rgba(255, 0, 0, 1)',
+                            hoverBackgroundColor: 'rgba(200, 200, 200, 1)',
+                            hoverBorderColor: 'rgba(200, 200, 200, 1)',
+                            data: score,
+                            fill: false
+                        
+                        }
+                    ]
+                };
+    
+                var ctx = $("#mycanvas1");
+              // var ctx = document.getElementById('#mycanvas');
+                 lineGraph = new Chart(ctx, {
+                    type: 'bar',
+                    data: chartdata,
+                    options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                    title: {
+                        display: true,
+                        text: 'Butuan '+value_param+' (2020)'
+                    }
+                    },
+                    tooltips: {
+                        mode: 'index',
+                        intersect: false,
+                    },
+                    scales: {
+                        // xAxes: [{
+                        //     type: 'time',
+                        //     distribution: 'linear'
+                        // }],
+                        x: {
+                            display: true,
+                            title: {
+                                display: true,
+                                text: 'Date'
+                            }
+                        },
+                        y: {
+                            display: true,
+                            title: {
+                                display: true,
+                                text: 'Butuan '+value_param
+                            },
+                                 ticks: {
+                    beginAtZero: true
+                       }
+                        }
+                    }
+                }
+                    
+                });
+    })
 }
 
