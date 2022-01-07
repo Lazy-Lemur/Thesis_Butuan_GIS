@@ -4,7 +4,187 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+
+    <!-- CSS only -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We"
+      crossorigin="anonymous"
+    />
+    <!-- JavaScript Bundle with Popper -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
+      crossorigin="anonymous"
+    ></script>
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.7.0/css/ol.css"
+      type="text/css"
+    />
+    <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.7.0/build/ol.js"></script>
+    <link rel="stylesheet" href="style.css" type="text/css" />
+    <!-- <script src="https://cdn-tailwindcss.vercel.app"></script> -->
+    <!-- <link rel="stylesheet" href="/tailwind.css" type="text/css"> -->
+
+    <script src="https://unpkg.com/ol-layerswitcher@3.8.3"></script>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/ol-layerswitcher@3.8.3/dist/ol-layerswitcher.css"
+    />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/chart.js@3.5.1/dist/chart.min.js"
+    ></script>
+
+    <title>Butuan GIS</title>
   </head>
-  <body></body>
+  <body>
+    <div id="top" class>
+      <h5>
+        <center>Butuan Employment and Population Rate GIS Dashboard</center>
+      </h5>
+    </div>
+    <div id="drop">
+      <!-- <label for="start_date">FROM:</label>-->
+      <input
+        type="date"
+        id="start_date"
+        name="start_date"
+        placeholder="dd-mm-yyyy"
+        min="2020-01-01"
+        max="2021-07-31"
+        value="2020-01-01"
+      />
+      <!--   <label for="end_date">TO:</label>-->
+      <input
+        type="date"
+        id="end_date"
+        name="end_date"
+        placeholder="dd-mm-yyyy"
+        min="2020-01-01"
+        max="2021-07-31"
+        value="2021-07-31"
+      />
+      <input
+        type="button"
+        class="btn btn-info"
+        data-bs-toggle="modal"
+        data-bs-target="#exampleModalCenter"
+        value="click_modal"
+      />
+      <select
+        id="parameter"
+        class="form-select form-select-sm"
+        aria-label=".form-select-sm example"
+      >
+        <option selected value="population">Population</option>
+        <option value="employed">Employed</option>
+        <option value="unemployed">Unemployed</option>
+        <option value="underemployed">Underemployed</option>
+      </select>
+    </div>
+    <div id="counter">
+      <center>
+        <button class="btn btn-light" type="button" id="population"></button>
+        <button class="btn btn-danger" type="button" id="employed"></button>
+        <button class="btn btn-warning" type="button" id="unemployed"></button>
+        <button class="btn btn-info" type="button" id="underemployed"></button>
+      </center>
+    </div>
+
+    <div id="graph1"><canvas id="mycanvas1"></canvas></div>
+    <div id="graph2"><canvas id="mycanvas2"></canvas></div>
+    <div id="map" class="map">
+      <div id="legend">
+        <div class="">
+          <div id="legend_title" style="font-size: 11px">Legend</div>
+        </div>
+        <div class="symbol">
+          <div id="class6"></div>
+          <div id="6" class="legend_txt" style="font-size: 12px"></div>
+        </div>
+        <div class="symbol">
+          <div id="class5"></div>
+          <div id="5" class="legend_txt" style="font-size: 12px"></div>
+        </div>
+        <div class="symbol">
+          <div id="class4"></div>
+          <div id="4" class="legend_txt" style="font-size: 12px"></div>
+        </div>
+        <div class="symbol">
+          <div id="class3"></div>
+          <div id="3" class="legend_txt" style="font-size: 12px"></div>
+        </div>
+        <div class="symbol">
+          <div id="class2"></div>
+          <div id="2" class="legend_txt" style="font-size: 12px"></div>
+        </div>
+        <div class="symbol">
+          <div id="class1"></div>
+          <div id="1" class="legend_txt" style="font-size: 12px"></div>
+        </div>
+        <div class="symbol">
+          <div id="class0"></div>
+          <div id="0" class="legend_txt" style="font-size: 12px"></div>
+        </div>
+      </div>
+    </div>
+    <div id="popup" class="ol-popup">
+      <a href="#" id="popup-closer" class="ol-popup-closer"></a>
+      <div id="popup-content"></div>
+    </div>
+
+    <div id="info">&nbsp;</div>
+
+    <!-- Upload Modal -->
+    <div
+      class="modal fade"
+      id="exampleModalCenter"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalCenterTitle"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <form>
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLongTitle">Upload CSV</h5>
+              <button
+                type="button"
+                class="close"
+                data-bs-dismiss="modal"
+                aria-hidden="true"
+              >
+                &times;
+              </button>
+            </div>
+            <div class="modal-body">
+              <input
+                type="file"
+                class="form-control"
+                name="chooseFile"
+                id="chooseFile"
+              />
+            </div>
+            <div class="modal-footer">
+              <input
+                type="button"
+                value="Cancel"
+                class="btn btn-default"
+                data-bs-dismiss="modal"
+              />
+              <input type="submit" value="Upload" class="btn btn-info" />
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
 </html>
