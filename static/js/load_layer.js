@@ -31,13 +31,13 @@ function load_layer() {
     value_param = param.options[param.selectedIndex].value;
     console.log(typeof(start_date));
 
-    var url_max = "../dbase/bxu_max_value_spatial.jsp";
+    var url_max = "static/dbase/bxu_max_value_spatial.jsp";
     url_max += "?parameter="+value_param;
 
-    var url_point = "../dbase/bxu_layer_point_spatial.jsp";
+    var url_point = "static/dbase/bxu_layer_point_spatial.jsp";
     url_point += "?parameter="+value_param;
 
-    var url_poly = "../dbase/bxu_layer_spatial.jsp";
+    var url_poly = "static/dbase/bxu_layer_spatial.jsp";
     url_poly += "?parameter="+value_param;
 
     $.getJSON(url_max, function(data){
@@ -193,7 +193,7 @@ function load_layer() {
            //map.addLayer(geojson_point);
     layerSwitcher.renderPanel();
 
-    var url_bxu_year_cumalative = "../dbase/bxu_butuan_cumulative_per_year.jsp";
+    var url_bxu_year_cumulative = "static/dbase/bxu_butuan_cumulative_per_year.jsp";
     url_bxu_year_cumulative += "?parameter="+value_param;
 
     $.getJSON(url_bxu_year_cumulative, function(data){
@@ -207,10 +207,6 @@ function load_layer() {
             score.push(data[i][value_param]);
             console.log(score);
             date_to_score[data[i].year] = data[i][value_param];
-            //score1.push(data[i].production);
-            //score2.push(data[i].yield);
-            //alert(i);
-            
         }
         date.sort(function(a,b){
             a = a.split('-').reverse().join('');
@@ -282,7 +278,7 @@ function load_layer() {
         });
     });
 
-    var url_variable_brgy = "../dbase/bxu_variable_brgy.jsp";
+    var url_variable_brgy = "static/dbase/bxu_variable_brgy.jsp";
     url_variable_brgy += "?parameter="+value_param;
 
     $.getJSON(url_variable_brgy, function(data){
@@ -369,7 +365,7 @@ function load_layer() {
         });
     });
 
-    var url_variables_sum_per_year = "../dbase/bxu_variables_sum.jsp";
+    var url_variables_sum_per_year = "static/dbase/bxu_variables_sum.jsp";
 
     $.getJSON(url_variables_sum_per_year, function(data){
         $("#population").html('Population: '+parseInt(data[0].population, 10));
