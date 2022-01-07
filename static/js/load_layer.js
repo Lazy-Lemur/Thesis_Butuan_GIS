@@ -198,88 +198,184 @@ function load_layer() {
 
     $.getJSON(url_bxu_year_cumulative, function(data){
         var date = [];
-                var score = [];
-                var date_to_score = Object();
-                var score1 = [];
-                var score2 = [];
-                for(var i in data) {
-                    date.push(data[i].year);
-                    score.push(data[i][value_param]);
-                    console.log(score);
-                    date_to_score[data[i].year] = data[i][value_param];
-                    //score1.push(data[i].production);
-                    //score2.push(data[i].yield);
-                    //alert(i);
-                   
-                }
-                date.sort(function(a,b){
-                    a = a.split('-').reverse().join('');
-                    b = b.split('-').reverse().join('');
-                    return a > b ? 1 : a < b ? -1 : 0;
-                })
-                console.log(score);
-                // date = date.map(date => new Date(date));
+        var score = [];
+        var date_to_score = Object();
+        var score1 = [];
+        var score2 = [];
+        for(var i in data) {
+            date.push(data[i].year);
+            score.push(data[i][value_param]);
+            console.log(score);
+            date_to_score[data[i].year] = data[i][value_param];
+            //score1.push(data[i].production);
+            //score2.push(data[i].yield);
+            //alert(i);
+            
+        }
+        date.sort(function(a,b){
+            a = a.split('-').reverse().join('');
+            b = b.split('-').reverse().join('');
+            return a > b ? 1 : a < b ? -1 : 0;
+        })
+        console.log(score);
+        // date = date.map(date => new Date(date));
+        
+        var chartdata = {
+            labels: date,
+            datasets : [
+                {
+                    label: 'Butuan '+value_param,
+                    backgroundColor: 'rgba(255, 0, 0, 1)',
+                    borderColor: 'rgba(255, 0, 0, 1)',
+                    hoverBackgroundColor: 'rgba(200, 200, 200, 1)',
+                    hoverBorderColor: 'rgba(200, 200, 200, 1)',
+                    data: score,
+                    fill: false
                 
-                var chartdata = {
-                    labels: date,
-                    datasets : [
-                        {
-                            label: 'Butuan '+value_param,
-                            backgroundColor: 'rgba(255, 0, 0, 1)',
-                            borderColor: 'rgba(255, 0, 0, 1)',
-                            hoverBackgroundColor: 'rgba(200, 200, 200, 1)',
-                            hoverBorderColor: 'rgba(200, 200, 200, 1)',
-                            data: score,
-                            fill: false
-                        
-                        }
-                    ]
-                };
+                }
+            ]
+        };
     
-                var ctx = $("#mycanvas1");
-              // var ctx = document.getElementById('#mycanvas');
-                 lineGraph = new Chart(ctx, {
-                    type: 'bar',
-                    data: chartdata,
-                    options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
+        var ctx = $("#mycanvas1");
+        // var ctx = document.getElementById('#mycanvas');
+            lineGraph = new Chart(ctx, {
+            type: 'bar',
+            data: chartdata,
+            options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+            title: {
+                display: true,
+                text: 'Butuan '+value_param+' (2020)'
+            }
+            },
+            tooltips: {
+                mode: 'index',
+                intersect: false,
+            },
+            scales: {
+                // xAxes: [{
+                //     type: 'time',
+                //     distribution: 'linear'
+                // }],
+                x: {
+                    display: true,
                     title: {
                         display: true,
-                        text: 'Butuan '+value_param+' (2020)'
+                        text: 'Date'
                     }
+                },
+                y: {
+                    display: true,
+                    title: {
+                        display: true,
+                        text: 'Butuan '+value_param
                     },
-                    tooltips: {
-                        mode: 'index',
-                        intersect: false,
-                    },
-                    scales: {
-                        // xAxes: [{
-                        //     type: 'time',
-                        //     distribution: 'linear'
-                        // }],
-                        x: {
+                            ticks: {
+            beginAtZero: true
+                }
+                }
+            }
+        }
+            
+        });
+    });
+
+    var url_variable_brgy = "../dbase/bxu_variable_brgy.jsp";
+    url_variable_brgy += "?parameter="+value_param;
+
+    $.getJSON(url_variable_brgy, function(data){
+        var date = [];
+        var score = [];
+        var brgy = []
+        var score1 = [];
+        var score2 = [];
+        for(var i in data) {
+            // date.push(data[i].year);
+            score.push(data[i][value_param]);
+            brgy.push(data[i].barangay);
+            //score1.push(data[i].production);
+            //score2.push(data[i].yield);
+            //alert(i);
+        }
+
+        date.sort(function(a,b){
+            a = a.split('-').reverse().join('');
+            b = b.split('-').reverse().join('');
+            return a > b ? 1 : a < b ? -1 : 0;
+        });
+
+        var chartdata = {
+            labels: brgy,
+            datasets : [
+                {
+                    // label: 'COVID '+value_param,
+                    label: 'Butuan Per Barangay '+value_param,
+                    backgroundColor: 'rgba(255, 0, 0, 1)',
+                    borderColor: 'rgba(255, 0, 0, 1)',
+                    hoverBackgroundColor: 'rgba(200, 200, 200, 1)',
+                    hoverBorderColor: 'rgba(200, 200, 200, 1)',
+                    data: score,
+                    fill: false
+                
+                }
+            ]
+        };
+
+        var ctx = $("#mycanvas2");
+        // var ctx = document.getElementById('#mycanvas');
+            barGraph = new Chart(ctx, {
+            type: 'bar',
+            data: chartdata,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                title: {
+                    display: true,
+                    text: 'Butuan Per Barangay '+value_param+' Rate('+start_date+' to '+end_date+')'
+                }
+                },
+                tooltips: {
+                    mode: 'index',
+                    intersect: false,
+                },
+                scales: {
+                    // xAxes: [{
+                    //     type: 'time',
+                    //     distribution: 'linear'
+                    // }],
+                    x: {
+                        display: true,
+                        title: {
                             display: true,
-                            title: {
-                                display: true,
-                                text: 'Date'
-                            }
+                            text: 'Barangay'
+                        }
+                    },
+                    y: {
+                        display: true,
+                        title: {
+                            display: true,
+                            text: 'Butuan Per Barangay'+value_param
                         },
-                        y: {
-                            display: true,
-                            title: {
-                                display: true,
-                                text: 'Butuan '+value_param
-                            },
-                                 ticks: {
-                    beginAtZero: true
-                       }
+                        ticks: {
+                            beginAtZero: true
                         }
                     }
                 }
-                    
-                });
-    })
+            }
+            
+        });
+    });
+
+    var url_variables_sum_per_year = "../dbase/bxu_variables_sum.jsp";
+
+    $.getJSON(url_variables_sum_per_year, function(data){
+        $("#population").html('Population: '+parseInt(data[0].population, 10));
+        $("#employed").html('Employed: '+data[0].employed);
+        $("#unemployed").html('Unemployed: '+data[0].unemployed);
+        $("#underemployed").html('Underemployed: '+data[0].underemployed);
+    });
 }
 
