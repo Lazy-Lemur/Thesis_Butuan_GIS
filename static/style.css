@@ -195,6 +195,7 @@ body {
   background-color: #fed976;
 }
 
+/* Layers Floater */
 .ol-popup {
   position: absolute;
   background-color: white;
@@ -237,4 +238,47 @@ body {
 }
 .ol-popup-closer:after {
   content: "X";
+}
+
+/* Modal Styles */
+.modal .modal-dialog {
+  max-width: 400px;
+}
+
+.modal .modal-ehader,
+.modal .modal-body,
+.modal .modal-footer {
+  padding: 20px 30px;
+}
+
+.modal .modal-content {
+  border-radius: 1px;
+}
+
+.modal .modal-footer {
+  background: #ecf0f1;
+  border-radius: 0 0 1px 1px;
+}
+
+.modal .modal-title {
+  display: inline-block;
+}
+
+.modal .form-control {
+  border-radius: 1px;
+  box-shadow: none;
+  border-color: #ddd;
+}
+
+/* .modal textarea.form-control{
+    resize: vertical;
+  } */
+
+.modal .btn {
+  border-radius: 1px;
+  min-width: 100px;
+}
+
+.modal form label {
+  font-weight: normal;
 }
