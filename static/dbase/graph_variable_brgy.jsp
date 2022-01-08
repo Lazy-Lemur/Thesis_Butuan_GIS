@@ -15,10 +15,7 @@ myConnection = DriverManager.getConnection(url,username,password);
 Statement st;
 ResultSet rs;
 st = myConnection.createStatement();
-//        String query = "SELECT SUM(daily_"+request.getParameter("parameter")+") as "+request.getParameter("parameter")+", date FROM world_covid_data where date >= '"+request.getParameter("date1")+"' AND date <= '"+request.getParameter("date2")+"' GROUP BY date order by date";
-//	String query = "SELECT SUM("+request.getParameter("parameter")+") as "+request.getParameter("parameter")+", barangay, year FROM bxushapefile WHERE year = 2020 GROUP BY year ORDER BY year";
-//        String query = "SELECT MAX(SUM) FROM(SELECT SUM("+request.getParameter("parameter")+") as sum, barangay FROM bxushapefile WHERE year = 2020 GROUP BY barangay) as foo";
-        String query = "SELECT "+request.getParameter("parameter")+", brgy FROM bxu_data";
+        String query = "SELECT "+request.getParameter("parameter")+", brgy FROM bxu_data WHERE year = "+request.getParameter("year")+" ";
          
         rs = st.executeQuery(query);
 	ResultSetMetaData  meta = rs.getMetaData();

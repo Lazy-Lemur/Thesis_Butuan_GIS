@@ -15,7 +15,7 @@ Statement st;
 ResultSet rs;
 st = myConnection.createStatement();
 //         String query  = "SELECT MAX(SUM) From(SELECT SUM(daily_"+request.getParameter("parameter")+") as sum FROM world_covid_data where date >= '"+request.getParameter("date1")+"' AND date <= '"+request.getParameter("date2")+"' GROUP BY country_name) z";
-String query = "SELECT MAX(SUM) FROM(SELECT SUM("+request.getParameter("parameter")+") as sum FROM bxu_data WHERE year = 2015 GROUP BY brgy) as foo";
+String query = "SELECT MAX(SUM) FROM(SELECT SUM("+request.getParameter("parameter")+") as sum FROM bxu_data WHERE year = "+request.getParameter("year")+" GROUP BY brgy) as foo";
 rs = st.executeQuery(query);
 ResultSetMetaData  meta = rs.getMetaData();
 Integer columncount = meta.getColumnCount();

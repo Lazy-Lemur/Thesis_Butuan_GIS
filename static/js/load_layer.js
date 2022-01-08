@@ -28,17 +28,25 @@ function load_layer() {
     var start_date = document.getElementById("start_date").value;
     var end_date = document.getElementById("end_date").value;
     var param = document.getElementById("parameter");
+    var year = 2015;
+
+    start_date = convert_format(start_date);
+    end_date = convert_format(end_date);
+
     value_param = param.options[param.selectedIndex].value;
     console.log(typeof(start_date));
 
     var url_max = "static/dbase/bxu_max_value_spatial.jsp";
     url_max += "?parameter="+value_param;
+    url_max += "&year="+year;
 
     var url_point = "static/dbase/bxu_layer_point_spatial.jsp";
     url_point += "?parameter="+value_param;
+    url_point += "&year="+year;
 
     var url_poly = "static/dbase/bxu_layer_spatial.jsp";
     url_poly += "?parameter="+value_param;
+    url_poly += "&year="+year;
 
     $.getJSON(url_max, function(data){
         //alert('karan');
@@ -97,13 +105,11 @@ function load_layer() {
             var col1 = 'rgba(255, 0, 0, 0.6)';
             getStyle2 = function (feature, resolution) {
             
-            
-            
             var txt = new ol.style.Text({
                 text: feature.get('barangay')+":"+feature.get([value_param]),
                 offsetX: 20,
                 offsetY: -15,
-                font: '12px Calibri,sans-serif',
+                font: '12px Roboto Slab,serif',
                 fill: new ol.style.Fill({
                 color: '#000'
                 }),
@@ -193,17 +199,20 @@ function load_layer() {
            //map.addLayer(geojson_point);
     layerSwitcher.renderPanel();
 
-    var url_bxu_year_cumulative = "static/dbase/bxu_butuan_cumulative_per_year.jsp";
+    var url_bxu_year_cumulative = "static/dbase/graph_butuan_class_cumulative_per_year.jsp";
     url_bxu_year_cumulative += "?parameter="+value_param;
+    url_bxu_year_cumulative += "&year="+year;
 
     $.getJSON(url_bxu_year_cumulative, function(data){
         var date = [];
         var score = [];
+        var brgy_class = [];
         var date_to_score = Object();
         var score1 = [];
         var score2 = [];
         for(var i in data) {
             date.push(data[i].year);
+            brgy_class.push(data[i].class);
             score.push(data[i][value_param]);
             console.log(score);
             date_to_score[data[i].year] = data[i][value_param];
@@ -217,10 +226,10 @@ function load_layer() {
         // date = date.map(date => new Date(date));
         
         var chartdata = {
-            labels: date,
+            labels: brgy_class,
             datasets : [
                 {
-                    label: 'Butuan '+value_param,
+                    label: 'Butuan '+value_param + ' by Class ('+year+')',
                     backgroundColor: 'rgba(255, 0, 0, 1)',
                     borderColor: 'rgba(255, 0, 0, 1)',
                     hoverBackgroundColor: 'rgba(200, 200, 200, 1)',
@@ -238,48 +247,50 @@ function load_layer() {
             type: 'bar',
             data: chartdata,
             options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-            title: {
-                display: true,
-                text: 'Butuan '+value_param+' (2020)'
-            }
-            },
-            tooltips: {
-                mode: 'index',
-                intersect: false,
-            },
-            scales: {
-                // xAxes: [{
-                //     type: 'time',
-                //     distribution: 'linear'
-                // }],
-                x: {
-                    display: true,
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
                     title: {
                         display: true,
-                        text: 'Date'
+                        text: 'Butuan '+value_param+' by Class ('+year+')'
                     }
                 },
-                y: {
-                    display: true,
-                    title: {
+                tooltips: {
+                    mode: 'index',
+                    intersect: false,
+                },
+                scales: {
+                    // xAxes: [{
+                    //     type: 'time',
+                    //     distribution: 'linear'
+                    // }],
+                    x: {
                         display: true,
-                        text: 'Butuan '+value_param
+                        title: {
+                            display: true,
+                            text: 'Barangay Class'
+                        }
                     },
-                            ticks: {
-            beginAtZero: true
-                }
+                    y: {
+                        display: true,
+                        title: {
+                            display: true,
+                            // text: 'Butuan '+value_param+' '
+                            text: 'Density'
+                        },
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }
                 }
             }
-        }
             
         });
     });
 
-    var url_variable_brgy = "static/dbase/bxu_variable_brgy.jsp";
+    var url_variable_brgy = "static/dbase/graph_variable_brgy.jsp";
     url_variable_brgy += "?parameter="+value_param;
+    url_variable_brgy += "&year="+year;
 
     $.getJSON(url_variable_brgy, function(data){
         var date = [];
@@ -290,7 +301,7 @@ function load_layer() {
         for(var i in data) {
             // date.push(data[i].year);
             score.push(data[i][value_param]);
-            brgy.push(data[i].barangay);
+            brgy.push(data[i].brgy);
             //score1.push(data[i].production);
             //score2.push(data[i].yield);
             //alert(i);
@@ -307,7 +318,7 @@ function load_layer() {
             datasets : [
                 {
                     // label: 'COVID '+value_param,
-                    label: 'Butuan Per Barangay '+value_param,
+                    label: 'Barangay '+value_param+' Density',
                     backgroundColor: 'rgba(255, 0, 0, 1)',
                     borderColor: 'rgba(255, 0, 0, 1)',
                     hoverBackgroundColor: 'rgba(200, 200, 200, 1)',
@@ -330,7 +341,7 @@ function load_layer() {
                 plugins: {
                 title: {
                     display: true,
-                    text: 'Butuan Per Barangay '+value_param+' Rate('+start_date+' to '+end_date+')'
+                    text: 'Butuan '+value_param+' Density Per Barangay'
                 }
                 },
                 tooltips: {
@@ -353,7 +364,7 @@ function load_layer() {
                         display: true,
                         title: {
                             display: true,
-                            text: 'Butuan Per Barangay'+value_param
+                            text: 'Density'
                         },
                         ticks: {
                             beginAtZero: true
@@ -375,3 +386,7 @@ function load_layer() {
     });
 }
 
+function convert_format(dt){
+    dt_arr = dt.split('-');
+    return (dt_arr[2] + '-' + dt_arr[1] + '-' + dt_arr[0]);
+}
