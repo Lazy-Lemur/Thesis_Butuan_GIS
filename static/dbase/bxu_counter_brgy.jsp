@@ -15,10 +15,9 @@ myConnection = DriverManager.getConnection(url,username,password);
 Statement st;
 ResultSet rs;
 st = myConnection.createStatement();
-        String query = "SELECT "+request.getParameter("parameter")+", brgy, sqkm FROM bxu_data WHERE year = "+request.getParameter("year")+" ";
-         
-        rs = st.executeQuery(query);
-	ResultSetMetaData  meta = rs.getMetaData();
+         String query  = "SELECT SUM(population) as population,  SUM(employed) as employed, SUM(unemployed) as unemployed, SUM(underemployed) as underemployed FROM bxu_data WHERE year = "+request.getParameter("year")+" AND brgy = '"+request.getParameter("brgy")+"'";
+          rs = st.executeQuery(query) ;
+		ResultSetMetaData  meta = rs.getMetaData();
 Integer columncount = meta.getColumnCount();
        %>
 [

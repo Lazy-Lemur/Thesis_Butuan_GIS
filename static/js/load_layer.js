@@ -30,8 +30,8 @@ function load_layer() {
     var param = document.getElementById("parameter");
     var year = 2015;
 
-    start_date = convert_format(start_date);
-    end_date = convert_format(end_date);
+    // start_date = convert_format(start_date);
+    // end_date = convert_format(end_date);
 
     value_param = param.options[param.selectedIndex].value;
     console.log(typeof(start_date));
@@ -106,7 +106,7 @@ function load_layer() {
             getStyle2 = function (feature, resolution) {
             
             var txt = new ol.style.Text({
-                text: feature.get('barangay')+":"+feature.get([value_param]),
+                text: feature.get('brgy')+":"+feature.get([value_param]),
                 offsetX: 20,
                 offsetY: -15,
                 font: '12px Roboto Slab,serif',
@@ -157,7 +157,7 @@ function load_layer() {
     });
 
     geojson = new ol.layer.Vector({
-        title: 'Layer 1 '+value_param+'('+start_date+' to '+end_date+')',
+        title: 'Layer 1 '+value_param+'('+year+')',
             source: new ol.source.Vector({
             url: url_poly,
             format: new ol.format.GeoJSON()
@@ -178,7 +178,7 @@ function load_layer() {
            //map.addLayer(geojson);		
     layerSwitcher.renderPanel();
     geojson_point = new ol.layer.Vector({
-        title: 'Layer '+value_param+'('+start_date+' to '+end_date+')_circle',
+        title: 'Layer '+value_param+'('+year+')_circle',
              source: new ol.source.Vector({
                 url: url_point,
              format: new ol.format.GeoJSON()
@@ -230,8 +230,14 @@ function load_layer() {
             datasets : [
                 {
                     label: 'Butuan '+value_param + ' by Class ('+year+')',
-                    backgroundColor: 'rgba(255, 0, 0, 1)',
-                    borderColor: 'rgba(255, 0, 0, 1)',
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgb(255, 99, 132)',
+                        'rgb(54, 162, 235)'
+                    ],
                     hoverBackgroundColor: 'rgba(200, 200, 200, 1)',
                     hoverBorderColor: 'rgba(200, 200, 200, 1)',
                     data: score,
@@ -244,7 +250,7 @@ function load_layer() {
         var ctx = $("#mycanvas1");
         // var ctx = document.getElementById('#mycanvas');
             lineGraph = new Chart(ctx, {
-            type: 'bar',
+            type: 'doughnut',
             data: chartdata,
             options: {
                 responsive: true,
@@ -386,7 +392,7 @@ function load_layer() {
     });
 }
 
-function convert_format(dt){
-    dt_arr = dt.split('-');
-    return (dt_arr[2] + '-' + dt_arr[1] + '-' + dt_arr[0]);
-}
+// function convert_format(dt){
+//     dt_arr = dt.split('-');
+//     return (dt_arr[2] + '-' + dt_arr[1] + '-' + dt_arr[0]);
+// }

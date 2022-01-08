@@ -13,20 +13,21 @@ function click_graph(evt){
     });
 
     if(feature){
-        var brgy_name = feature.get('barangay');
+        var brgy_name = feature.get('brgy');
         var start_date = document.getElementById("start_date").ariaValueMax;
         var end_date = document.getElementById("end_date").value;
         var param = document.getElementById("parameter");
         var year = 2015;
 
-        start_date = convert_format(start_date);
-        end_date = convert_format(end_date);
+        // start_date = convert_format(start_date);
+        // end_date = convert_format(end_date);
 
         value_param = param.options[param.selectedIndex].value;
 
-        var url_brgy_cumulative_per_year = "static/dbase/bxu_brgy_cumulative_per_year.jsp";
+        var url_brgy_cumulative_per_year = "static/dbase/graph_brgy_cumulative_per_year.jsp";
         url_brgy_cumulative_per_year += "?parameter="+value_param;
         url_brgy_cumulative_per_year += "&brgy="+brgy_name;
+        url_brgy_cumulative_per_year += "&year="+year;
 
         $.getJSON(url_brgy_cumulative_per_year, function(data){
             var date = [];
@@ -52,11 +53,12 @@ function click_graph(evt){
                 labels: date,
                 datasets : [
                     {
-                        label: 'COVID '+value_param,
-                        backgroundColor: 'rgba(255, 0, 0, 1)',
-                        borderColor: 'rgba(255, 0, 0, 1)',
-                        hoverBackgroundColor: 'rgba(200, 200, 200, 1)',
-                        hoverBorderColor: 'rgba(200, 200, 200, 1)',
+                        label: brgy_name+' '+value_param + ' Density',
+                        backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                        borderColor: 'rgb(153, 102, 255)',
+                        borderWidth: 1,
+                        // hoverBackgroundColor: 'rgba(200, 200, 200, 1)',
+                        // hoverBorderColor: 'rgba(200, 200, 200, 1)',
                         data: score,
                         fill: false
                     
@@ -64,18 +66,19 @@ function click_graph(evt){
                 ]
             };
 
-            var ctx = $("#mycanvas1");
+            var ctx = $("#mycanvas2");
             // var ctx = document.getElementById('#mycanvas');
                 lineGraph = new Chart(ctx, {
-                type: 'line',
+                type: 'bar',
                 data: chartdata,
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
+                    indexAxis: 'y',
                     plugins: {
                         title: {
                             display: true,
-                            text: country_name+' - Cumulative COVID '+value_param+'('+start_date+' to '+end_date+')'
+                            text: brgy_name+' - Cumulative Density of '+value_param+'('+year+')'
                         }
                     },
                     tooltips: {
@@ -94,7 +97,7 @@ function click_graph(evt){
                             display: true,
                             title: {
                                 display: true,
-                                text: 'COVID '+value_param
+                                text: value_param + " Density"
                             },
                             ticks: {
                                 beginAtZero: true
@@ -106,23 +109,47 @@ function click_graph(evt){
             });
         });
 
-        var url_brgy_variable_sum_per_year = "statis/dbase/bxu_brgy_variable_sum_per_year.jsp";
-        url_brgy_variable_sum_per_year += "?parameter="+value_param;
+        var url_brgy_variable_sum_per_year = "static/dbase/graph_brgy_variable_sum_per_year.jsp";
+        // url_brgy_variable_sum_per_year += "?parameter="+value_param;
+        url_brgy_variable_sum_per_year += "?brgy="+brgy_name;
         url_brgy_variable_sum_per_year += "&year="+year;
 
         $.getJSON(url_brgy_variable_sum_per_year, function(data){
             var date = [];
+            var population_score = [];
+            var employed_score = [];
+            var unemployed_score = [];
+            var underemployed_score = [];
             var score = [];
-            var score1 = [];
-            var score2 = [];
-            for(var i in data) {
-                date.push(data[i].date);
-                score.push(data[i][value_param]);
-                //score1.push(data[i].production);
-                //score2.push(data[i].yield);
-                //alert(i);
-            }
+            var keys = Object.keys(data);
 
+            score.push(data[0].population);
+            score.push(data[0].employed);
+            score.push(data[0].unemployed);
+            score.push(data[0].underemployed);
+
+            // for(var key in data) {
+            //     if(!data.hasOwnProperty(key))
+            //     date.push(data[i].year);
+            //     population_score.push(data[i][population]);
+            //     employed_score.push(data[i][employed]);
+            //     unemployed_score.push(data[i][unemployed]);
+            //     underemployed_score.push(data[i][underemployed]);
+            //     // score.push(data[i][value_param]);
+            //     //score1.push(data[i].production);
+            //     //score2.push(data[i].yield);
+            //     //alert(i);
+            //     console.log(date);
+            // }
+
+            // Object.entries(data).forEach(([key, value]) => {
+            //     if(data[key].value > 2015){
+            //         score.push(data[key]);
+            //     }
+            // });
+            console.log(score);
+
+            console.log(data);
             date.sort(function(a,b){
                 a = a.split('-').reverse().join('');
                 b = b.split('-').reverse().join('');
@@ -130,14 +157,25 @@ function click_graph(evt){
             });
 
             var chartdata = {
-                labels: date,
+                labels: ['Population', 'Employed', 'Unemployed', 'Underemployed'],
                 datasets : [
                     {
-                        label: 'Butuan - '+brgy_name+' '+value_param,
-                        backgroundColor: 'rgba(255, 0, 0, 1)',
-                        borderColor: 'rgba(255, 0, 0, 1)',
-                        hoverBackgroundColor: 'rgba(200, 200, 200, 1)',
-                        hoverBorderColor: 'rgba(200, 200, 200, 1)',
+                        label: brgy_name + ' Compound Density',
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 159, 64, 0.2)',
+                            'rgba(255, 205, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgb(255, 99, 132)',
+                            'rgb(255, 159, 64)',
+                            'rgb(255, 205, 86)',
+                            'rgb(75, 192, 192)'
+                        ],
+                        borderWidth: 1,
+                        // hoverBackgroundColor: 'rgba(200, 200, 200, 1)',
+                        // hoverBorderColor: 'rgba(200, 200, 200, 1)',
                         data: score,
                         fill: false
                     
@@ -145,7 +183,7 @@ function click_graph(evt){
                 ]
             };
 
-            var ctx = $("#mycanvas2");
+            var ctx = $("#mycanvas1");
           // var ctx = document.getElementById('#mycanvas');
              barGraph = new Chart(ctx, {
                 type: 'bar',
@@ -153,10 +191,11 @@ function click_graph(evt){
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
+                    indexAxis: 'y',
                     plugins: {
                         title: {
                             display: true,
-                            text: country_name+' - Daily COVID '+value_param+'('+start_date+' to '+end_date+')'
+                            text: brgy_name+' Compound Density ('+year+')'
                         }
                     },
                     tooltips: {
@@ -168,14 +207,14 @@ function click_graph(evt){
                             display: true,
                             title: {
                                 display: true,
-                                text: 'Date'
+                                text: 'Variable'
                             }
                         },
                         y: {
                             display: true,
                             title: {
                                 display: true,
-                                text: 'COVID '+value_param
+                                text:  'Density'
                             },
                             ticks: {
                                  beginAtZero: true
@@ -188,7 +227,7 @@ function click_graph(evt){
 
         });
 
-        var url_counter_brgy = "static/dbase/bxu_country_brgy.jsp";
+        var url_counter_brgy = "static/dbase/bxu_counter_brgy.jsp";
         url_counter_brgy += "?year="+year;
         url_counter_brgy += "&brgy="+brgy_name;
 
@@ -202,7 +241,7 @@ function click_graph(evt){
     else{load_layer();}
 }
 
-function convert_format(dt){
-    dt_arr = dt.split('-');
-    return (dt_arr[2] + '-' + dt_arr[1] + '-' + dt_arr[0]);
-}
+// function convert_format(dt){
+//     dt_arr = dt.split('-');
+//     return (dt_arr[2] + '-' + dt_arr[1] + '-' + dt_arr[0]);
+// }
