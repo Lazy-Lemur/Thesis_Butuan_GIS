@@ -48,6 +48,11 @@ function load_layer() {
     url_poly += "?parameter="+value_param;
     url_poly += "&year="+year;
 
+    $.getJSON(url_poly, function(data){
+        console.log(data['features'].length);
+        console.log(data);
+    })
+
     $.getJSON(url_max, function(data){
         //alert('karan');
         var max_value = data.maximum[0].max;

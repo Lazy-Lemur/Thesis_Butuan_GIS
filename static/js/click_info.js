@@ -48,7 +48,7 @@ function click_info(evt){
             var coordinate = evt.coordinate;
             //alert(coordinate);
            var content1 = '<h5>' + feature.get('brgy') + '</h5>';
-            content1 += '<h6>' +value_param +': '+ Math.round(feature.get([value_param]))+'</h6>';
+            content1 += '<h6>' +value_param +': '+ numberWithCommas(Math.round(feature.get([value_param])))+'</h6>';
             content1 += '<h6>' + 'Land Area: ' + feature.get('sqkm') + ' Sq. Km.';
     
           /*  var content1 = '<h3>' + feature.get([name]) + '</h3>';
@@ -67,3 +67,7 @@ function click_info(evt){
     
     
     }
+
+    function numberWithCommas(x){
+      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
