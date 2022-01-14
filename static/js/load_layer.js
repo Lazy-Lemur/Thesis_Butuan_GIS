@@ -99,8 +99,8 @@ function load_layer() {
                         }),
                         stroke: new ol.style.Stroke({
                         color: 'white',
-                        lineDash: [5],
-                        width: 5
+                        lineDash: [1],
+                        width: 2
                         })
                     });
                 }
