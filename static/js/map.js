@@ -79,7 +79,7 @@ var Satellite =  new ol.layer.Tile({
         ],
         attributionsCollapsible: false,
         url: 'https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
-        maxZoom: 23
+        maxZoom: 22
         })
 });
 
