@@ -115,11 +115,7 @@ function load_layer() {
                 }),
                 stroke: new ol.style.Stroke({
                 color: '#fff',
-<<<<<<< HEAD
                 width: 2    
-=======
-                width: 2
->>>>>>> a2952f7ed04f7ac9a2b4cc6fff71f0feff29512e
                 })
             });
         
@@ -207,12 +203,7 @@ function load_layer() {
            //map.addLayer(geojson_point);
     layerSwitcher.renderPanel();
 
-<<<<<<< HEAD
-
-    var url_bxu_year_cumulative = "static/dbase/bxu_butuan_cumulative_per_year.jsp";
-=======
     var url_bxu_year_cumulative = "static/dbase/graph_butuan_class_cumulative_per_year.jsp";
->>>>>>> a2952f7ed04f7ac9a2b4cc6fff71f0feff29512e
     url_bxu_year_cumulative += "?parameter="+value_param;
     url_bxu_year_cumulative += "&year="+year;
 
