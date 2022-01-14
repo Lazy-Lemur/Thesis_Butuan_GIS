@@ -30,6 +30,11 @@
       href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round"
     />
     <link
+      href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@300&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/icon?family=Material+Icons"
     />
@@ -52,17 +57,18 @@
     ></script>
 
     <link rel="stylesheet" href="static/css/style.css" />
+    <script src="static/js/jquery.csv.js"></script>
     <title>Butuan GIS</title>
   </head>
   <body>
     <div id="top" class>
       <h5>
-        <center>Butuan Employment and Population Rate GIS Dashboard</center>
+        <center>Employment and Population Rate GIS Dashboard</center>
       </h5>
     </div>
     <div id="drop">
       <!-- <label for="start_date">FROM:</label>-->
-      <input
+      <!-- <input
         type="date"
         id="start_date"
         name="start_date"
@@ -70,9 +76,9 @@
         min="2020-01-01"
         max="2021-07-31"
         value="2020-01-01"
-      />
+      /> -->
       <!--   <label for="end_date">TO:</label>-->
-      <input
+      <!-- <input
         type="date"
         id="end_date"
         name="end_date"
@@ -80,13 +86,14 @@
         min="2020-01-01"
         max="2021-07-31"
         value="2021-07-31"
-      />
+      /> -->
+      <!-- <input type="text" style="width: 150px" class="date-own form-control" /> -->
       <input
         type="button"
         class="btn btn-info"
         data-bs-toggle="modal"
         data-bs-target="#exampleModalCenter"
-        value="click_modal"
+        value="Upload-CSV"
       />
       <select
         id="parameter"
@@ -101,10 +108,26 @@
     </div>
     <div id="counter">
       <center>
-        <button class="btn btn-light" type="button" id="population"></button>
-        <button class="btn btn-danger" type="button" id="employed"></button>
-        <button class="btn btn-warning" type="button" id="unemployed"></button>
-        <button class="btn btn-info" type="button" id="underemployed"></button>
+        <button
+          class="btn btn-sm btn-light"
+          type="button"
+          id="population"
+        ></button>
+        <button
+          class="btn btn-sm btn-light"
+          type="button"
+          id="employed"
+        ></button>
+        <button
+          class="btn btn-sm btn-light"
+          type="button"
+          id="unemployed"
+        ></button>
+        <button
+          class="btn btn-sm btn-light"
+          type="button"
+          id="underemployed"
+        ></button>
       </center>
     </div>
 
@@ -163,7 +186,8 @@
     >
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-          <form>
+          <form id="csvForm">
+            <!-- <form method="POST" id="csvForm" action="" enctype="multipart/form-data"> -->
             <div class="modal-header">
               <h5 class="modal-title" id="exampleModalLongTitle">Upload CSV</h5>
               <button
@@ -181,6 +205,7 @@
                 class="form-control"
                 name="chooseFile"
                 id="chooseFile"
+                action=".csv, .xlsx"
               />
             </div>
             <div class="modal-footer">
@@ -197,6 +222,9 @@
       </div>
     </div>
 
+    <script src="static/js/functionality.js"></script>
+    <script src="static/js/click_info.js"></script>
+    <script src="static/js/click_graph.js"></script>
     <script src="static/js/load_layer.js"></script>
     <script src="static/js/map.js"></script>
   </body>

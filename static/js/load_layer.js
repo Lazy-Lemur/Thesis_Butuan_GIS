@@ -25,20 +25,28 @@ function load_layer() {
         overlays.getLayers().remove(geojson_point);
     }
 
-    var start_date = document.getElementById("start_date").value;
-    var end_date = document.getElementById("end_date").value;
+    // var start_date = document.getElementById("start_date").value;
+    // var end_date = document.getElementById("end_date").value;
     var param = document.getElementById("parameter");
+    var year = 2015;
+
+    // start_date = convert_format(start_date);
+    // end_date = convert_format(end_date);
+
     value_param = param.options[param.selectedIndex].value;
-    console.log(typeof(start_date));
+    // console.log(typeof(start_date));
 
     var url_max = "static/dbase/bxu_max_value_spatial.jsp";
     url_max += "?parameter="+value_param;
+    url_max += "&year="+year;
 
     var url_point = "static/dbase/bxu_layer_point_spatial.jsp";
     url_point += "?parameter="+value_param;
+    url_point += "&year="+year;
 
     var url_poly = "static/dbase/bxu_layer_spatial.jsp";
     url_poly += "?parameter="+value_param;
+    url_poly += "&year="+year;
 
     $.getJSON(url_max, function(data){
         //alert('karan');
@@ -97,19 +105,21 @@ function load_layer() {
             var col1 = 'rgba(255, 0, 0, 0.6)';
             getStyle2 = function (feature, resolution) {
             
-            
-            
             var txt = new ol.style.Text({
-                text: feature.get('barangay')+":"+feature.get([value_param]),
+                text: feature.get('brgy')+":"+feature.get([value_param]),
                 offsetX: 20,
                 offsetY: -15,
-                font: '12px Calibri,sans-serif',
+                font: '12px Roboto Slab,serif',
                 fill: new ol.style.Fill({
                 color: '#000'
                 }),
                 stroke: new ol.style.Stroke({
                 color: '#fff',
+<<<<<<< HEAD
                 width: 2    
+=======
+                width: 2
+>>>>>>> a2952f7ed04f7ac9a2b4cc6fff71f0feff29512e
                 })
             });
         
@@ -151,7 +161,7 @@ function load_layer() {
     });
 
     geojson = new ol.layer.Vector({
-        title: 'Layer 1 '+value_param+'('+start_date+' to '+end_date+')',
+        title: 'Layer 1 '+value_param+'('+year+')',
             source: new ol.source.Vector({
             url: url_poly,
             format: new ol.format.GeoJSON(),
@@ -174,7 +184,7 @@ function load_layer() {
            //map.addLayer(geojson);		
     layerSwitcher.renderPanel();
     geojson_point = new ol.layer.Vector({
-        title: 'Layer '+value_param+'('+start_date+' to '+end_date+')_circle',
+        title: 'Layer '+value_param+'('+year+')_circle',
              source: new ol.source.Vector({
                 url: url_point,
              format: new ol.format.GeoJSON()
@@ -197,18 +207,25 @@ function load_layer() {
            //map.addLayer(geojson_point);
     layerSwitcher.renderPanel();
 
+<<<<<<< HEAD
 
     var url_bxu_year_cumulative = "static/dbase/bxu_butuan_cumulative_per_year.jsp";
+=======
+    var url_bxu_year_cumulative = "static/dbase/graph_butuan_class_cumulative_per_year.jsp";
+>>>>>>> a2952f7ed04f7ac9a2b4cc6fff71f0feff29512e
     url_bxu_year_cumulative += "?parameter="+value_param;
+    url_bxu_year_cumulative += "&year="+year;
 
     $.getJSON(url_bxu_year_cumulative, function(data){
         var date = [];
         var score = [];
+        var brgy_class = [];
         var date_to_score = Object();
         var score1 = [];
         var score2 = [];
         for(var i in data) {
             date.push(data[i].year);
+            brgy_class.push(data[i].class);
             score.push(data[i][value_param]);
             console.log(score);
             date_to_score[data[i].year] = data[i][value_param];
@@ -222,12 +239,18 @@ function load_layer() {
         // date = date.map(date => new Date(date));
         
         var chartdata = {
-            labels: date,
+            labels: brgy_class,
             datasets : [
                 {
-                    label: 'Butuan '+value_param,
-                    backgroundColor: 'rgba(255, 0, 0, 1)',
-                    borderColor: 'rgba(255, 0, 0, 1)',
+                    label: 'Butuan '+value_param + ' by Class ('+year+')',
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgb(255, 99, 132)',
+                        'rgb(54, 162, 235)'
+                    ],
                     hoverBackgroundColor: 'rgba(200, 200, 200, 1)',
                     hoverBorderColor: 'rgba(200, 200, 200, 1)',
                     data: score,
@@ -240,51 +263,53 @@ function load_layer() {
         var ctx = $("#mycanvas1");
         // var ctx = document.getElementById('#mycanvas');
             lineGraph = new Chart(ctx, {
-            type: 'bar',
+            type: 'doughnut',
             data: chartdata,
             options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-            title: {
-                display: true,
-                text: 'Butuan '+value_param+' (2020)'
-            }
-            },
-            tooltips: {
-                mode: 'index',
-                intersect: false,
-            },
-            scales: {
-                // xAxes: [{
-                //     type: 'time',
-                //     distribution: 'linear'
-                // }],
-                x: {
-                    display: true,
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
                     title: {
                         display: true,
-                        text: 'Date'
+                        text: 'Butuan '+value_param+' by Class ('+year+')'
                     }
                 },
-                y: {
-                    display: true,
-                    title: {
+                tooltips: {
+                    mode: 'index',
+                    intersect: false,
+                },
+                scales: {
+                    // xAxes: [{
+                    //     type: 'time',
+                    //     distribution: 'linear'
+                    // }],
+                    x: {
                         display: true,
-                        text: 'Butuan '+value_param
+                        title: {
+                            display: true,
+                            text: 'Barangay Class'
+                        }
                     },
-                            ticks: {
-            beginAtZero: true
-                }
+                    y: {
+                        display: true,
+                        title: {
+                            display: true,
+                            // text: 'Butuan '+value_param+' '
+                            text: 'Density'
+                        },
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }
                 }
             }
-        }
             
         });
     });
 
-    var url_variable_brgy = "static/dbase/bxu_variable_brgy.jsp";
+    var url_variable_brgy = "static/dbase/graph_variable_brgy.jsp";
     url_variable_brgy += "?parameter="+value_param;
+    url_variable_brgy += "&year="+year;
 
     $.getJSON(url_variable_brgy, function(data){
         var date = [];
@@ -295,7 +320,7 @@ function load_layer() {
         for(var i in data) {
             // date.push(data[i].year);
             score.push(data[i][value_param]);
-            brgy.push(data[i].barangay);
+            brgy.push(data[i].brgy);
             //score1.push(data[i].production);
             //score2.push(data[i].yield);
             //alert(i);
@@ -312,11 +337,12 @@ function load_layer() {
             datasets : [
                 {
                     // label: 'COVID '+value_param,
-                    label: 'Butuan Per Barangay '+value_param,
-                    backgroundColor: 'rgba(255, 0, 0, 1)',
-                    borderColor: 'rgba(255, 0, 0, 1)',
-                    hoverBackgroundColor: 'rgba(200, 200, 200, 1)',
-                    hoverBorderColor: 'rgba(200, 200, 200, 1)',
+                    label: 'Barangay '+value_param+' Density',
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgb(75, 192, 192)',
+                    borderWidth: 1,
+                    // hoverBackgroundColor: 'rgba(200, 200, 200, 1)',
+                    // hoverBorderColor: 'rgba(200, 200, 200, 1)',
                     data: score,
                     fill: false
                 
@@ -335,7 +361,7 @@ function load_layer() {
                 plugins: {
                 title: {
                     display: true,
-                    text: 'Butuan Per Barangay '+value_param+' Rate('+start_date+' to '+end_date+')'
+                    text: 'Butuan '+value_param+' Density Per Barangay'
                 }
                 },
                 tooltips: {
@@ -358,7 +384,7 @@ function load_layer() {
                         display: true,
                         title: {
                             display: true,
-                            text: 'Butuan Per Barangay'+value_param
+                            text: 'Density'
                         },
                         ticks: {
                             beginAtZero: true
@@ -373,10 +399,18 @@ function load_layer() {
     var url_variables_sum_per_year = "static/dbase/bxu_variables_sum.jsp";
 
     $.getJSON(url_variables_sum_per_year, function(data){
-        $("#population").html('Population: '+parseInt(data[0].population, 10));
-        $("#employed").html('Employed: '+data[0].employed);
-        $("#unemployed").html('Unemployed: '+data[0].unemployed);
-        $("#underemployed").html('Underemployed: '+data[0].underemployed);
+        $("#population").html('Population: '+numberWithCommas(parseInt(data[0].population, 10)));
+        $("#employed").html('Employed: '+numberWithCommas(data[0].employed));
+        $("#unemployed").html('Unemployed: '+numberWithCommas(data[0].unemployed));
+        $("#underemployed").html('Underemployed: '+numberWithCommas(data[0].underemployed));
     });
 }
 
+function numberWithCommas(x){
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+// function convert_format(dt){
+//     dt_arr = dt.split('-');
+//     return (dt_arr[2] + '-' + dt_arr[1] + '-' + dt_arr[0]);
+// }

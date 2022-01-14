@@ -37,28 +37,39 @@ $("#parameter" ).change(function () {
     load_layer();
 });
 
-$("#start_date" ).change(function () {
-    load_layer();
-});
+// $("#start_date" ).change(function () {
+//     load_layer();
+// });
 
-$("#end_date" ).change(function () {
-    load_layer();
-});
+// $("#end_date" ).change(function () {
+//     load_layer();
+// });
 	
 	
 var view = new ol.View({
     projection: 'EPSG:4326',
     center: [82.00, 23.00],
     zoom: 10,
+<<<<<<< HEAD
   
+=======
+    minZoom: 10,
+    maxZoom: 14,
+>>>>>>> a2952f7ed04f7ac9a2b4cc6fff71f0feff29512e
 });
 
 var view_ov = new ol.View({
     projection: 'EPSG:4326',
     center: [82.00, 23.00],
+<<<<<<< HEAD
     zoom: 10,
    
     
+=======
+    zoom: 5,
+    minZoom: 10,
+    maxZoom: 14,
+>>>>>>> a2952f7ed04f7ac9a2b4cc6fff71f0feff29512e
 });
 
 var OSM =  new ol.layer.Tile({
@@ -83,7 +94,7 @@ var Satellite =  new ol.layer.Tile({
 });
 
 var base_maps = new ol.layer.Group({
-    'title': 'Base maps',
+    'title': 'Base Map',
     layers: [ OSM, Satellite ]
 });
 
