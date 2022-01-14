@@ -37,25 +37,29 @@ $("#parameter" ).change(function () {
     load_layer();
 });
 
-$("#start_date" ).change(function () {
-    load_layer();
-});
+// $("#start_date" ).change(function () {
+//     load_layer();
+// });
 
-$("#end_date" ).change(function () {
-    load_layer();
-});
+// $("#end_date" ).change(function () {
+//     load_layer();
+// });
 	
 	
 var view = new ol.View({
     projection: 'EPSG:4326',
     center: [82.00, 23.00],
-    zoom: 5,
+    zoom: 10,
+    minZoom: 10,
+    maxZoom: 14,
 });
 
 var view_ov = new ol.View({
     projection: 'EPSG:4326',
     center: [82.00, 23.00],
     zoom: 5,
+    minZoom: 10,
+    maxZoom: 14,
 });
 
 var OSM =  new ol.layer.Tile({
@@ -80,7 +84,7 @@ var Satellite =  new ol.layer.Tile({
 });
 
 var base_maps = new ol.layer.Group({
-    'title': 'Base maps',
+    'title': 'Base Map',
     layers: [ OSM, Satellite ]
 });
 
@@ -101,7 +105,7 @@ map.addLayer(overlays);
 	  	  
 var layerSwitcher = new ol.control.LayerSwitcher({
     activationMode: 'click',
-    startActive: true,
+    startActive: false,
 	tipLabel: 'Layers', // Optional label for button
     groupSelectStyle: 'children', // Can be 'children' [default], 'group' or 'none'
     collapseTipLabel: 'Collapse layers',

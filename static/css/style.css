@@ -58,6 +58,7 @@ body {
   border-width: thin;
 }
 #start_date {
+  display: block;
   position: absolute;
   top: 0%;
   left: 35%;
@@ -281,4 +282,8 @@ body {
 
 .modal form label {
   font-weight: normal;
+}
+
+.btn-light {
+  border-color: #000000;
 }

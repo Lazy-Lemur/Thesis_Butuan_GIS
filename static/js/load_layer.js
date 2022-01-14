@@ -25,8 +25,8 @@ function load_layer() {
         overlays.getLayers().remove(geojson_point);
     }
 
-    var start_date = document.getElementById("start_date").value;
-    var end_date = document.getElementById("end_date").value;
+    // var start_date = document.getElementById("start_date").value;
+    // var end_date = document.getElementById("end_date").value;
     var param = document.getElementById("parameter");
     var year = 2015;
 
@@ -34,7 +34,7 @@ function load_layer() {
     // end_date = convert_format(end_date);
 
     value_param = param.options[param.selectedIndex].value;
-    console.log(typeof(start_date));
+    // console.log(typeof(start_date));
 
     var url_max = "static/dbase/bxu_max_value_spatial.jsp";
     url_max += "?parameter="+value_param;
@@ -115,7 +115,7 @@ function load_layer() {
                 }),
                 stroke: new ol.style.Stroke({
                 color: '#fff',
-                width: 3
+                width: 2
                 })
             });
         
@@ -129,7 +129,7 @@ function load_layer() {
             if (feature.get([value_param]) > (i*diff) && feature.get([value_param]) <= ((i+1)*diff)) {
                 return new ol.style.Style({
                     image: new ol.style.Circle({
-                    radius: 5*(i+1),
+                    radius: 3*(i+1),
                     fill: fill,
                     stroke: stroke
                     }),
@@ -325,10 +325,11 @@ function load_layer() {
                 {
                     // label: 'COVID '+value_param,
                     label: 'Barangay '+value_param+' Density',
-                    backgroundColor: 'rgba(255, 0, 0, 1)',
-                    borderColor: 'rgba(255, 0, 0, 1)',
-                    hoverBackgroundColor: 'rgba(200, 200, 200, 1)',
-                    hoverBorderColor: 'rgba(200, 200, 200, 1)',
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgb(75, 192, 192)',
+                    borderWidth: 1,
+                    // hoverBackgroundColor: 'rgba(200, 200, 200, 1)',
+                    // hoverBorderColor: 'rgba(200, 200, 200, 1)',
                     data: score,
                     fill: false
                 
@@ -385,11 +386,15 @@ function load_layer() {
     var url_variables_sum_per_year = "static/dbase/bxu_variables_sum.jsp";
 
     $.getJSON(url_variables_sum_per_year, function(data){
-        $("#population").html('Population: '+parseInt(data[0].population, 10));
-        $("#employed").html('Employed: '+data[0].employed);
-        $("#unemployed").html('Unemployed: '+data[0].unemployed);
-        $("#underemployed").html('Underemployed: '+data[0].underemployed);
+        $("#population").html('Population: '+numberWithCommas(parseInt(data[0].population, 10)));
+        $("#employed").html('Employed: '+numberWithCommas(data[0].employed));
+        $("#unemployed").html('Unemployed: '+numberWithCommas(data[0].unemployed));
+        $("#underemployed").html('Underemployed: '+numberWithCommas(data[0].underemployed));
     });
+}
+
+function numberWithCommas(x){
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
 // function convert_format(dt){

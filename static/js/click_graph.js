@@ -14,8 +14,8 @@ function click_graph(evt){
 
     if(feature){
         var brgy_name = feature.get('brgy');
-        var start_date = document.getElementById("start_date").ariaValueMax;
-        var end_date = document.getElementById("end_date").value;
+        // var start_date = document.getElementById("start_date").ariaValueMax;
+        // var end_date = document.getElementById("end_date").value;
         var param = document.getElementById("parameter");
         var year = 2015;
 
@@ -94,7 +94,7 @@ function click_graph(evt){
                             }
                         },
                         y: {
-                            display: true,
+                            display:true,
                             title: {
                                 display: true,
                                 text: value_param + " Density"
