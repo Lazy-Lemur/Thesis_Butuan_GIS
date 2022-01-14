@@ -64,8 +64,8 @@ function load_layer() {
                             }),
                             stroke: new ol.style.Stroke({
                             color: 'white',
-                            lineDash: [2],
-                            width: 2
+                            lineDash: [1],
+                            width: 5
                             })
                         });
                     }
@@ -86,8 +86,8 @@ function load_layer() {
                         }),
                         stroke: new ol.style.Stroke({
                         color: 'white',
-                        lineDash: [2],
-                        width: 2
+                        lineDash: [5],
+                        width: 5
                         })
                     });
                 }
@@ -109,12 +109,12 @@ function load_layer() {
                 }),
                 stroke: new ol.style.Stroke({
                 color: '#fff',
-                width: 3
+                width: 2    
                 })
             });
         
             var fill = new ol.style.Fill({color: col});
-            var stroke = new ol.style.Stroke({color: col1, width: 1});
+            var stroke = new ol.style.Stroke({color: col1, width: 2});
             
             
             
@@ -123,7 +123,7 @@ function load_layer() {
             if (feature.get([value_param]) > (i*diff) && feature.get([value_param]) <= ((i+1)*diff)) {
                 return new ol.style.Style({
                     image: new ol.style.Circle({
-                    radius: 5*(i+1),
+                    radius: 3*(i+1),
                     fill: fill,
                     stroke: stroke
                     }),
@@ -154,7 +154,9 @@ function load_layer() {
         title: 'Layer 1 '+value_param+'('+start_date+' to '+end_date+')',
             source: new ol.source.Vector({
             url: url_poly,
-            format: new ol.format.GeoJSON()
+            format: new ol.format.GeoJSON(),
+           //dataProjection:'EPSG:4326',
+                    
             }),
             style: function (feature, resolution) {
                 return getStyle1(feature, resolution);
@@ -183,8 +185,10 @@ function load_layer() {
     });
            
     geojson_point.getSource().on('addfeature', function(){
-       map.getView().fit(
+       
+        map.getView().fit(
            geojson_point.getSource().getExtent(),
+           
            { duration: 000, size: map.getSize() }
        );
     });
@@ -192,6 +196,7 @@ function load_layer() {
     overlays.getLayers().push(geojson_point);
            //map.addLayer(geojson_point);
     layerSwitcher.renderPanel();
+
 
     var url_bxu_year_cumulative = "static/dbase/bxu_butuan_cumulative_per_year.jsp";
     url_bxu_year_cumulative += "?parameter="+value_param;

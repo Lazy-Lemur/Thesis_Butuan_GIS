@@ -49,13 +49,16 @@ $("#end_date" ).change(function () {
 var view = new ol.View({
     projection: 'EPSG:4326',
     center: [82.00, 23.00],
-    zoom: 5,
+    zoom: 10,
+  
 });
 
 var view_ov = new ol.View({
     projection: 'EPSG:4326',
     center: [82.00, 23.00],
-    zoom: 5,
+    zoom: 10,
+   
+    
 });
 
 var OSM =  new ol.layer.Tile({
@@ -75,7 +78,7 @@ var Satellite =  new ol.layer.Tile({
         ],
         attributionsCollapsible: false,
         url: 'https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
-        maxZoom: 23
+        maxZoom: 22
         })
 });
 
@@ -101,7 +104,7 @@ map.addLayer(overlays);
 	  	  
 var layerSwitcher = new ol.control.LayerSwitcher({
     activationMode: 'click',
-    startActive: true,
+    startActive: false,
 	tipLabel: 'Layers', // Optional label for button
     groupSelectStyle: 'children', // Can be 'children' [default], 'group' or 'none'
     collapseTipLabel: 'Collapse layers',
