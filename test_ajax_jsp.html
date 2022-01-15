@@ -46,6 +46,9 @@
           <td>
             <input type="text" name="fname" id="fname" />
           </td>
+          <td>
+            <a href="database.html" target="_blank" rel="noopener noreferrer">Data</a>
+          </td>
         </tr>
         <tr>
           <td colspan="2" align="right">
@@ -59,7 +62,8 @@
     <script>
       $(document).ready(function () {
         $("#sub").click(function () {
-          $.post("welcome.jsp", function (data) {
+          var fname = $("#fname").val();
+          $.post("welcome.jsp", { FirstName: fname }, function (data) {
             $("#msg").html(data);
           });
         });

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="static/css/test_style.css">
+    
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!-- JavaScript Bundle with Popper -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="table-wrapper">
+            <div class="table-title">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h2><b>Butuan</b> Geodata</h2>
+                    </div>
+                    <div class="col-sm-6">
+                        <button type="button" class="btn btn-success js-add-geodata"><i class="material-icons">&#xE147;</i> <span>Add Geodata</span></button>
+                        <button type="button" class="btn btn-danger js-delete-geodata"><i class="material-icons">&#xE15C;</i> <span>Delete All</span></button>
+                    </div>
+                </div>
+            </div>
+            <div class="table-container">
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>id</th>
+                            <th>brgy</th>
+                            <th>population</th>
+                            <th>employed</th>
+                            <th>unemployed</th>
+                            <th>underemployed</th>
+                            <th>hectares</th>
+                            <th>sqkm</th>
+                            <th>year</th>
+                            <th>class</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function() {
+            var fetch_url = "static/dbase/fetch_geodata.jsp";
+            $.getJSON(fetch_url, function(data){
+                var result = "";
+                console.log(data);
+                for(var i = 0; i < data.length; i++){
+                    result += "<tr>";
+                    result += "<td>" + data[i].id + "</td>";
+                    result += "<td>" + data[i].brgy + "</td>";
+                    result += "<td>" + data[i].population + "</td>";
+                    result += "<td>" + data[i].employed + "</td>";
+                    result += "<td>" + data[i].unemployed + "</td>";
+                    result += "<td>" + data[i].underemployed + "</td>";
+                    result += "<td>" + data[i].hectares + "</td>";
+                    result += "<td>" + data[i].sqkm + "</td>";
+                    result += "<td>" + data[i].year + "</td>";
+                    result += "<td>" + data[i].class + "</td>";
+                    result += "<td class='btn-group'>";
+                    result += "<button class='edit js-update-geo' data-toggle='modal'><i class='material-icons' data-toggle='tooltip' title='Edit'>&#xE254;</i></button>";
+                    result += "<button class='delete js-delete-geo' data-toggle='modal'><i class='material-icons' data-toggle='tooltip' title='Delete'>&#xE872;</i></button>";
+                    result += "</td>";
+                    result += "</tr>";
+                }
+                $("tbody").html(result);
+            });
+
+            // url 
+        });
+    </script>
+</body>
+</html>

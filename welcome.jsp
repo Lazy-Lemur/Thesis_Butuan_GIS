@@ -7,6 +7,9 @@
     <title>welcome</title>
   </head>
   <body>
-    <h1>Welcome Juriel</h1>
+    <% 
+      String _fname = request.getParameter("FirstName"); 
+      out.println(_fname);
+    %>
   </body>
 </html>

@@ -77,8 +77,8 @@ function load_layer() {
                             }),
                             stroke: new ol.style.Stroke({
                             color: 'white',
-                            lineDash: [1],
-                            width: 5
+                            lineDash: [2],
+                            width: 2
                             })
                         });
                     }
