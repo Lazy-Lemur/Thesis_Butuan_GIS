@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <!-- JQuery and Bootstrap CDNs -->
+    <script
+    src="https://code.jquery.com/jquery-3.6.0.js"
+    integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+    crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.2.7/pdfobject.min.js" integrity="sha512-g16L6hyoieygYYZrtuzScNFXrrbJo/lj9+1AYsw+0CYYYZ6lx5J3x9Yyzsm+D37/7jMIGh0fDqdvyYkNWbuYuA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+
+    <!-- Bootstrap Select -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta2/dist/css/bootstrap-select.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta2/dist/js/bootstrap-select.min.js"></script>
+    
+    <!-- YearPicker -->
+    <link rel="stylesheet" href="static/css/yearpicker.css">
+
+    <!-- OpenLayers API and LayerSwitcher -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.7.0/css/ol.css"
+      type="text/css"
+    />
+    <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.7.0/build/ol.js"></script>
+    <script src="https://unpkg.com/ol-layerswitcher@3.8.3"></script>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/ol-layerswitcher@3.8.3/dist/ol-layerswitcher.css"
+    />
+
+    <!-- ChartJS -->
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/chart.js@3.5.1/dist/chart.min.js"
+    ></script>
+
+    <!-- Fonts -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@300&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- External Static -->
+    <link rel="stylesheet" href="static/css/gis_style.css">
+</head>
+<body>
+    <header class="navbar navbar-expand-md navbar-dark bg-dark mb-4" role="navigation">
+        <a href="#" class="navbar-brand mx-5">Butuan GIS</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" 
+            aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a href="#" class="nav-link">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" target="_blank">GeoData</a>
+                </li>
+            </ul>
+        </div>
+    </header>
+    <div class="grid">
+        <div class="title">
+            <h2>Employment Butuan GIS Dashboard</h2>
+        </div>
+        <div class="header">
+            <input type="text" name="yearDate" id="yearPicker" class="yearPicker form-control" style="width: 150px;">        
+            <select name="category" class="selectpicker" data-style="btn-outline-info mx-4" id="parameter">
+                <option value="Population">Population</option>
+                <option value="Employed">Employed</option>
+                <option value="Unemployed">Unemployed</option>
+                <option value="Underemployed">Underemployed</option>
+            </select>
+        </div>
+        <div class="status">
+            <div class="row">
+                <div class="col">
+                    <div class="col-md">
+                        <div class="card text-center text-white mb-3" id="population">
+                            <div class="card-header">
+                                <h5 class="card-title">Population</h5>
+                            </div>
+                            <div class="card-body">
+                                <h3 id="population" class="card-title">23423432</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="col-md">
+                        <div class="card text-center text-white mb-3" id="employed">
+                            <div class="card-header">
+                                <h5 class="card-title">Employed</h5>
+                            </div>
+                            <div class="card-body">
+                                <h3 id="employed" class="card-title">234343</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="col-md">
+                        <div class="card text-center text-white mb-3" id="unemployed">
+                            <div class="card-header">
+                                <h5 class="card-title">Unemployed</h5>
+                            </div>
+                            <div class="card-body">
+                                <h3 id="unemployed" class="card-title">54534</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="col-md">
+                        <div class="card text-center text-white mb-3" id="underemployed">
+                            <div class="card-header">
+                                <h5 class="card-title">Underemployed</h5>
+                            </div>
+                            <div class="card-body">
+                                <h3 id="underemployed" class="card-title">65654</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="map" class="map">
+            <div id="legend">
+                <div class="">
+                  <label id="legend_title">Legend</label>
+                </div>
+                <div class="symbol">
+                  <div id="class6"></div>
+                  <span id="6" class="legend_txt">16k-20k</span>
+                </div>
+                <div class="symbol">
+                  <div id="class5"></div>
+                  <span id="5" class="legend_txt"></span>
+                </div>
+                <div class="symbol">
+                  <div id="class4"></div>
+                  <span id="4" class="legend_txt"></span>
+                </div>
+                <div class="symbol">
+                  <div id="class3"></div>
+                  <span id="3" class="legend_txt"></span>
+                </div>
+                <div class="symbol">
+                  <div id="class2"></div>
+                  <span id="2" class="legend_txt"></span>
+                </div>
+                <div class="symbol">
+                  <div id="class1"></div>
+                  <span id="1" class="legend_txt"></span>
+                </div>
+                <div class="symbol">
+                  <div id="class0"></div>
+                  <span id="0" class="legend_txt"></span>
+                </div>
+            </div>
+            
+        </div>
+        <div class="graph1"><canvas id="mycanvas1"></canvas></div>
+        <div class="graph2"><canvas id="mycanvas2"></canvas></div>
+        <div id="popup" class="ol-popup">
+            <a href="#" id="popup-closer" class="ol-popup-closer"></a>
+            <div id="popup-content"></div>
+        </div>
+    </div>
+    <script src="static/js/yearpicker.js"></script>
+    <script src="static/js/functionality.js"></script>
+    <script src="static/js/load_layer.js"></script>
+    <script src="static/js/map.js"></script>
+    <script src="static/js/charts.js"></script>
+    <script src="static/js/click_info.js"></script>
+    <script src="static/js/click_graph.js"></script>
+    
+</body>
+</html>
