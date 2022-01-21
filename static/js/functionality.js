@@ -1,11 +1,18 @@
 $(document).ready(function(){
-  const csvForm = $('#csvForm');
-  const csvFile = $('#chooseFile');
 
-  $('#csvForm').on('submit', function(e){
-    e.preventDefault();
-    console.log("form submitted");
+  $('.yearPicker').yearpicker({
+    year: 2015,
+    startYear: 1930,
+    endYear: 2050
   });
+
+  // const csvForm = $('#csvForm');
+  // const csvFile = $('#chooseFile');
+
+  // $('#csvForm').on('submit', function(e){
+  //   e.preventDefault();
+  //   console.log("form submitted");
+  // });
 
     // $('#chooseFile').bind('change', function () {
     //     var filename = $("#chooseFile").val();
