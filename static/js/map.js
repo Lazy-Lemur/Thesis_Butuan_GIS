@@ -21,13 +21,13 @@ overlay = new ol.Overlay({
 /**
  * Add a click handler to hide the popup
  */
-closer.onclick = function(){
+closer.onclick = function () {
     overlay.setPosition(undefined);
     closer.blur();
     return false;
 }
 
-$('#parameter').change(function(){
+$('#parameter').change(function () {
     load_layer();
 });
 
@@ -60,11 +60,11 @@ var Satellite = new ol.layer.Tile({
     visible: true,
     source: new ol.source.XYZ({
         attributions: ['Powered by Esri',
-        'Source: Esri, DigitalGlobe, GeoEye, Earthstar Geographics, CNES/Airbus DS, USDA, USGS, AeroGRID, IGN, and the GIS User Community'
-    ],
-    attributionsCollapsible: false,
-    url: 'https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
-    maxZoom: 22
+            'Source: Esri, DigitalGlobe, GeoEye, Earthstar Geographics, CNES/Airbus DS, USDA, USGS, AeroGRID, IGN, and the GIS User Community'
+        ],
+        attributionsCollapsible: false,
+        url: 'https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+        maxZoom: 22
     })
 });
 
@@ -98,9 +98,9 @@ var layerSwitcher = new ol.control.LayerSwitcher({
 map.addControl(layerSwitcher);
 
 var mouse_position = new ol.control.MousePosition();
-var overview = new ol.control.OverviewMap({view: view_ov, collapseLabel: 'O', label: 'O'});
-var full_sc = new ol.control.FullScreen({label: 'F'});
-var zoom = new ol.control.Zoom({zoomInLabel: '+', zoomOutLabel: '-'});
+var overview = new ol.control.OverviewMap({ view: view_ov, collapseLabel: 'O', label: 'O' });
+var full_sc = new ol.control.FullScreen({ label: 'F' });
+var zoom = new ol.control.Zoom({ zoomInLabel: '+', zoomOutLabel: '-' });
 var slider = new ol.control.ZoomSlider();
 
 map.addControl(mouse_position);
@@ -120,7 +120,7 @@ map.addControl(zoom_ex);
 
 load_layer();
 
-map.on('click', function(evt){
+map.on('click', function (evt) {
     click_info(evt);
     click_graph(evt);
 });
