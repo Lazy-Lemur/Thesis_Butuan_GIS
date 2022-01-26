@@ -47,7 +47,13 @@ $(document).ready(function () {
 
     var load_delete_modal = function () {
         var btn = $(this);
+        var brgy = btn.attr('data-url').split('&')[0];
+        var year = btn.attr('data-url').split('&')[1];
         $('#deleteDataModal').modal("show");
+        $.ajax({
+            url: "static/dbase/delete_geodata.jsp",
+
+        })
     }
 
     var load_upload_modal = function () {

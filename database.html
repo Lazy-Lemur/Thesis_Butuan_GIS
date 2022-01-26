@@ -55,16 +55,16 @@
                                     <label for="selectAll"></label>
                                 </span>
                             </th>
-                            <th>id</th>
-                            <th>brgy</th>
-                            <th>population</th>
-                            <th>employed</th>
-                            <th>unemployed</th>
-                            <th>underemployed</th>
-                            <th>hectares</th>
-                            <th>sqkm</th>
-                            <th>year</th>
-                            <th>class</th>
+                            <th>ID</th>
+                            <th>Barangay</th>
+                            <th>Population</th>
+                            <th>Employed</th>
+                            <th>Unemployed</th>
+                            <th>Underemployed</th>
+                            <th>Hectares</th>
+                            <th>Square Km.</th>
+                            <th>Year</th>
+                            <th>Class</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -206,8 +206,8 @@
                     result += "<td>" + data[i].year + "</td>";
                     result += "<td>" + data[i].class + "</td>";
                     result += "<td class='btn-group'>";
-                    result += "<button class='edit js-update-geo' id='edit-tool'><i class='material-icons' data-bs-toggle='tooltip' data-bs-placement='top' title='Edit'>&#xE8B8;</i></button>";
-                    result += "<button class='delete js-delete-geo'><i class='material-icons' data-bs-toggle='tooltip' title='Delete'>&#xE5C9;</i></button>";
+                    result += "<button class='edit js-update-geo' data-url='"+data[i].id+"' id='edit-tool'><i class='material-icons' data-bs-toggle='tooltip' data-bs-placement='top' title='Edit'>&#xE8B8;</i></button>";
+                    result += "<button class='delete js-delete-geo' data-url='"+data[i].brgy+"&"+data[i].year+"'><i class='material-icons' data-bs-toggle='tooltip' title='Delete'>&#xE5C9;</i></button>";
                     result += "</td>";
                     result += "</tr>";
                 }
