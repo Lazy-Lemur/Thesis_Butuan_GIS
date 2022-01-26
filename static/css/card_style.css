@@ -26,7 +26,7 @@ body {
 
 .container .card{
  position: relative;
- width: 320px;
+ width: 3200px;
  height: 440px;
  box-shadow: inset 5px 5px 5px rgba(0, 0, 0, 0.05),
              inset -5px -5px 5px rgba(255, 255, 255, 0.5),
@@ -44,7 +44,7 @@ body {
     bottom: 20px;
     background: #ebf5fc;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-    border-radius: 15px;
+    border-radius: 10px;
     display: flex;
     justify-content: center;
     align-items: center;

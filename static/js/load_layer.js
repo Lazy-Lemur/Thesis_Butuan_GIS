@@ -2,25 +2,25 @@ function load_layer() {
     overlay.setPosition(undefined);
     closer.blur();
 
-    if(featureOverlay){
+    if (featureOverlay) {
         featureOverlay.getSource().clear();
         map.removeLayer(featureOverlay);
     }
 
-    if(lineGraph){
+    if (lineGraph) {
         lineGraph.destroy();
     }
 
-    if(barGraph){
+    if (barGraph) {
         barGraph.destroy();
     }
 
-    if(geojson){
+    if (geojson) {
         geojson.getSource().clear();
         overlays.getLayers().remove(geojson);
     }
 
-    if(geojson_point){
+    if (geojson_point) {
         geojson_point.getSource().clear();
         overlays.getLayers().remove(geojson_point);
     }
@@ -28,8 +28,10 @@ function load_layer() {
     // var start_date = document.getElementById("start_date").value;
     // var end_date = document.getElementById("end_date").value;
     var param = document.getElementById("parameter");
+    // var year = document.getElementById("yearPicker");
     var year = 2015;
-
+    console.log(param);
+    console.log(year);
     // start_date = convert_format(start_date);
     // end_date = convert_format(end_date);
 
@@ -37,208 +39,208 @@ function load_layer() {
     // console.log(typeof(start_date));
 
     var url_max = "static/dbase/bxu_max_value_spatial.jsp";
-    url_max += "?parameter="+value_param;
-    url_max += "&year="+year;
+    url_max += "?parameter=" + value_param;
+    url_max += "&year=" + year;
 
     var url_point = "static/dbase/bxu_layer_point_spatial.jsp";
-    url_point += "?parameter="+value_param;
-    url_point += "&year="+year;
+    url_point += "?parameter=" + value_param;
+    url_point += "&year=" + year;
 
     var url_poly = "static/dbase/bxu_layer_spatial.jsp";
-    url_poly += "?parameter="+value_param;
-    url_poly += "&year="+year;
+    url_poly += "?parameter=" + value_param;
+    url_poly += "&year=" + year;
 
-    $.getJSON(url_poly, function(data){
+    $.getJSON(url_poly, function (data) {
         console.log(data['features'].length);
         console.log(data);
     })
 
-    $.getJSON(url_max, function(data){
+    $.getJSON(url_max, function (data) {
         //alert('karan');
         var max_value = data.maximum[0].max;
         console.log(max_value);
         //alert(max_value);
-        
-        var diff = max_value/8;
+
+        var diff = max_value / 8;
         //alert(diff);
-        
+
         var i;
         var k;
-        var color = [[254, 217, 118, 0.7], [254, 178, 76, 0.7], [253, 141, 60, 0.7], [252, 78, 42, 0.7], [227, 26, 28, 0.7], [189, 0, 38, 0.7], [128, 0, 38, 0.7] ];
-        
+        var color = [[254, 217, 118, 0.7], [254, 178, 76, 0.7], [253, 141, 60, 0.7], [252, 78, 42, 0.7], [227, 26, 28, 0.7], [189, 0, 38, 0.7], [128, 0, 38, 0.7]];
+
         getStyle1 = function (feature, resolution) {
-        
+
             for (i = 0; i < 7; i++) {
-            
-                if (feature.get([value_param]) > (i*diff) && feature.get([value_param]) <= ((i+1)*diff)) {
-                        return new ol.style.Style({
-                            fill: new ol.style.Fill({
-                                color: color[i] // semi-transparent red
-                            }),
-                            stroke: new ol.style.Stroke({
+
+                if (feature.get([value_param]) > (i * diff) && feature.get([value_param]) <= ((i + 1) * diff)) {
+                    return new ol.style.Style({
+                        fill: new ol.style.Fill({
+                            color: color[i] // semi-transparent red
+                        }),
+                        stroke: new ol.style.Stroke({
                             color: 'white',
                             lineDash: [2],
                             width: 2
-                            })
-                        });
-                    }
-        //alert(i);
-                if (value_param == 'population' || value_param == 'employed'){
-                    $("#"+i).html(Math.round((i*diff)/1000)+"K - "+Math.round(((i+1)*diff)/1000)+"K");
-                
-                }
-                else{
-                    $("#"+i).html(Math.round((i*diff)/1000)+"K - "+Math.round(((i+1)*diff)/1000)+"K");
-                }
-                    $("#legend_title").html('<b>Legend - Layer1 '+value_param+'</b>');
-                }
-                if (feature.get([value_param]) == 0) {
-                    return new ol.style.Style({
-                        fill: new ol.style.Fill({
-                            color: [254, 217, 118, 0.7] // semi-transparent red
-                        }),
-                        stroke: new ol.style.Stroke({
-                        color: 'white',
-                        lineDash: [1],
-                        width: 2
                         })
                     });
                 }
+                //alert(i);
+                if (value_param == 'population' || value_param == 'employed') {
+                    $("#" + i).html(Math.round((i * diff) / 1000) + "K - " + Math.round(((i + 1) * diff) / 1000) + "K");
+
+                }
+                else {
+                    $("#" + i).html(Math.round((i * diff) / 1000) + "K - " + Math.round(((i + 1) * diff) / 1000) + "K");
+                }
+                $("#legend_title").html('<b>Legend - Layer1 ' + value_param + '</b>');
+            }
+            if (feature.get([value_param]) == 0) {
+                return new ol.style.Style({
+                    fill: new ol.style.Fill({
+                        color: [254, 217, 118, 0.7] // semi-transparent red
+                    }),
+                    stroke: new ol.style.Stroke({
+                        color: 'white',
+                        lineDash: [1],
+                        width: 2
+                    })
+                });
+            }
         };
-            
-            var col = 'rgba(255, 255, 0, 0.6)';
-            var col1 = 'rgba(255, 0, 0, 0.6)';
-            getStyle2 = function (feature, resolution) {
-            
+
+        var col = 'rgba(255, 255, 0, 0.6)';
+        var col1 = 'rgba(255, 0, 0, 0.6)';
+        getStyle2 = function (feature, resolution) {
+
             var txt = new ol.style.Text({
-                text: feature.get('brgy')+":"+feature.get([value_param]),
+                text: feature.get('brgy') + ":" + feature.get([value_param]),
                 offsetX: 20,
                 offsetY: -15,
                 font: '12px Roboto Slab,serif',
                 fill: new ol.style.Fill({
-                color: '#000'
+                    color: '#000'
                 }),
                 stroke: new ol.style.Stroke({
-                color: '#fff',
-                width: 2    
+                    color: '#fff',
+                    width: 2
                 })
             });
-        
-            var fill = new ol.style.Fill({color: col});
-            var stroke = new ol.style.Stroke({color: col1, width: 2});
-            
-            
-            
+
+            var fill = new ol.style.Fill({ color: col });
+            var stroke = new ol.style.Stroke({ color: col1, width: 2 });
+
+
+
             for (i = 0; i < 7; i++) {
-            
-            if (feature.get([value_param]) > (i*diff) && feature.get([value_param]) <= ((i+1)*diff)) {
-                return new ol.style.Style({
-                    image: new ol.style.Circle({
-                    radius: 3*(i+1),
-                    fill: fill,
-                    stroke: stroke
-                    }),
-                //	text: txt
-                        
+
+                if (feature.get([value_param]) > (i * diff) && feature.get([value_param]) <= ((i + 1) * diff)) {
+                    return new ol.style.Style({
+                        image: new ol.style.Circle({
+                            radius: 3 * (i + 1),
+                            fill: fill,
+                            stroke: stroke
+                        }),
+                        //	text: txt
+
                     });
                 }
-            //alert(i);
-            
+                //alert(i);
+
             }
             if (feature.get([value_param]) == 0) {
-            return new ol.style.Style({
+                return new ol.style.Style({
                     image: new ol.style.Circle({
                         radius: 0,
                         fill: fill,
                         stroke: stroke
                     }),
-                        //text: txt
-                        
+                    //text: txt
+
                 });
             }
-    
+
         };
-    
+
     });
 
     geojson = new ol.layer.Vector({
-        title: 'Layer 1 '+value_param+'('+year+')',
-            source: new ol.source.Vector({
+        title: 'Layer 1 ' + value_param + '(' + year + ')',
+        source: new ol.source.Vector({
             url: url_poly,
             format: new ol.format.GeoJSON(),
-           //dataProjection:'EPSG:4326',
-                    
-            }),
-            style: function (feature, resolution) {
-                return getStyle1(feature, resolution);
-            }
+            //dataProjection:'EPSG:4326',
+
+        }),
+        style: function (feature, resolution) {
+            return getStyle1(feature, resolution);
+        }
     });
-           
-    geojson.getSource().on('addfeature', function(){
+
+    geojson.getSource().on('addfeature', function () {
         map.getView().fit(
-           geojson.getSource().getExtent(),
-           { duration: 000, size: map.getSize() }
+            geojson.getSource().getExtent(),
+            { duration: 000, size: map.getSize() }
         );
     });
-    
+
     overlays.getLayers().push(geojson);
-           //map.addLayer(geojson);		
+    //map.addLayer(geojson);		
     layerSwitcher.renderPanel();
     geojson_point = new ol.layer.Vector({
-        title: 'Layer '+value_param+'('+year+')_circle',
-             source: new ol.source.Vector({
-                url: url_point,
-             format: new ol.format.GeoJSON()
-             }),
-             style: function (feature, resolution) {
-                return getStyle2(feature, resolution);
-            }
+        title: 'Layer ' + value_param + '(' + year + ')_circle',
+        source: new ol.source.Vector({
+            url: url_point,
+            format: new ol.format.GeoJSON()
+        }),
+        style: function (feature, resolution) {
+            return getStyle2(feature, resolution);
+        }
     });
-           
-    geojson_point.getSource().on('addfeature', function(){
-       
+
+    geojson_point.getSource().on('addfeature', function () {
+
         map.getView().fit(
-           geojson_point.getSource().getExtent(),
-           
-           { duration: 000, size: map.getSize() }
-       );
+            geojson_point.getSource().getExtent(),
+
+            { duration: 000, size: map.getSize() }
+        );
     });
-           
+
     overlays.getLayers().push(geojson_point);
-           //map.addLayer(geojson_point);
+    //map.addLayer(geojson_point);
     layerSwitcher.renderPanel();
 
     var url_bxu_year_cumulative = "static/dbase/graph_butuan_class_cumulative_per_year.jsp";
-    url_bxu_year_cumulative += "?parameter="+value_param;
-    url_bxu_year_cumulative += "&year="+year;
+    url_bxu_year_cumulative += "?parameter=" + value_param;
+    url_bxu_year_cumulative += "&year=" + year;
 
-    $.getJSON(url_bxu_year_cumulative, function(data){
+    $.getJSON(url_bxu_year_cumulative, function (data) {
         var date = [];
         var score = [];
         var brgy_class = [];
         var date_to_score = Object();
         var score1 = [];
         var score2 = [];
-        for(var i in data) {
+        for (var i in data) {
             date.push(data[i].year);
             brgy_class.push(data[i].class);
             score.push(data[i][value_param]);
             console.log(score);
             date_to_score[data[i].year] = data[i][value_param];
         }
-        date.sort(function(a,b){
+        date.sort(function (a, b) {
             a = a.split('-').reverse().join('');
             b = b.split('-').reverse().join('');
             return a > b ? 1 : a < b ? -1 : 0;
         })
         console.log(score);
         // date = date.map(date => new Date(date));
-        
+
         var chartdata = {
             labels: brgy_class,
-            datasets : [
+            datasets: [
                 {
-                    label: 'Butuan '+value_param + ' by Class ('+year+')',
+                    label: 'Butuan ' + value_param + ' by Class (' + year + ')',
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.2)',
                         'rgba(54, 162, 235, 0.2)'
@@ -251,14 +253,14 @@ function load_layer() {
                     hoverBorderColor: 'rgba(200, 200, 200, 1)',
                     data: score,
                     fill: false
-                
+
                 }
             ]
         };
-    
+
         var ctx = $("#mycanvas1");
         // var ctx = document.getElementById('#mycanvas');
-            lineGraph = new Chart(ctx, {
+        lineGraph = new Chart(ctx, {
             type: 'doughnut',
             data: chartdata,
             options: {
@@ -267,7 +269,7 @@ function load_layer() {
                 plugins: {
                     title: {
                         display: true,
-                        text: 'Butuan '+value_param+' by Class ('+year+')'
+                        text: 'Butuan ' + value_param + ' by Class (' + year + ')'
                     }
                 },
                 tooltips: {
@@ -299,21 +301,21 @@ function load_layer() {
                     }
                 }
             }
-            
+
         });
     });
 
     var url_variable_brgy = "static/dbase/graph_variable_brgy.jsp";
-    url_variable_brgy += "?parameter="+value_param;
-    url_variable_brgy += "&year="+year;
+    url_variable_brgy += "?parameter=" + value_param;
+    url_variable_brgy += "&year=" + year;
 
-    $.getJSON(url_variable_brgy, function(data){
+    $.getJSON(url_variable_brgy, function (data) {
         var date = [];
         var score = [];
         var brgy = []
         var score1 = [];
         var score2 = [];
-        for(var i in data) {
+        for (var i in data) {
             // date.push(data[i].year);
             score.push(data[i][value_param]);
             brgy.push(data[i].brgy);
@@ -322,7 +324,7 @@ function load_layer() {
             //alert(i);
         }
 
-        date.sort(function(a,b){
+        date.sort(function (a, b) {
             a = a.split('-').reverse().join('');
             b = b.split('-').reverse().join('');
             return a > b ? 1 : a < b ? -1 : 0;
@@ -330,10 +332,10 @@ function load_layer() {
 
         var chartdata = {
             labels: brgy,
-            datasets : [
+            datasets: [
                 {
                     // label: 'COVID '+value_param,
-                    label: 'Barangay '+value_param+' Density',
+                    label: 'Barangay ' + value_param + ' Density',
                     backgroundColor: 'rgba(75, 192, 192, 0.2)',
                     borderColor: 'rgb(75, 192, 192)',
                     borderWidth: 1,
@@ -341,24 +343,24 @@ function load_layer() {
                     // hoverBorderColor: 'rgba(200, 200, 200, 1)',
                     data: score,
                     fill: false
-                
+
                 }
             ]
         };
 
         var ctx = $("#mycanvas2");
         // var ctx = document.getElementById('#mycanvas');
-            barGraph = new Chart(ctx, {
+        barGraph = new Chart(ctx, {
             type: 'bar',
             data: chartdata,
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
                 plugins: {
-                title: {
-                    display: true,
-                    text: 'Butuan '+value_param+' Density Per Barangay'
-                }
+                    title: {
+                        display: true,
+                        text: 'Butuan ' + value_param + ' Density Per Barangay'
+                    }
                 },
                 tooltips: {
                     mode: 'index',
@@ -388,21 +390,21 @@ function load_layer() {
                     }
                 }
             }
-            
+
         });
     });
 
     var url_variables_sum_per_year = "static/dbase/bxu_variables_sum.jsp";
 
-    $.getJSON(url_variables_sum_per_year, function(data){
-        $("#population").html('Population: '+numberWithCommas(parseInt(data[0].population, 10)));
-        $("#employed").html('Employed: '+numberWithCommas(data[0].employed));
-        $("#unemployed").html('Unemployed: '+numberWithCommas(data[0].unemployed));
-        $("#underemployed").html('Underemployed: '+numberWithCommas(data[0].underemployed));
+    $.getJSON(url_variables_sum_per_year, function (data) {
+        $("#population").html(numberWithCommas(parseInt(data[0].population, 10)));
+        $("#employed").html(numberWithCommas(data[0].employed));
+        $("#unemployed").html(numberWithCommas(data[0].unemployed));
+        $("#underemployed").html(numberWithCommas(data[0].underemployed));
     });
 }
 
-function numberWithCommas(x){
+function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
