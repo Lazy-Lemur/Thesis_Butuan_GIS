@@ -28,7 +28,8 @@ function load_layer() {
     // var start_date = document.getElementById("start_date").value;
     // var end_date = document.getElementById("end_date").value;
     var param = document.getElementById("parameter");
-    // var year = document.getElementById("yearPicker");
+    // var year = null;
+
     var year = 2015;
     console.log(param);
     console.log(year);
@@ -36,6 +37,7 @@ function load_layer() {
     // end_date = convert_format(end_date);
 
     value_param = param.options[param.selectedIndex].value;
+    console.log(value_param);
     // console.log(typeof(start_date));
 
     var url_max = "static/dbase/bxu_max_value_spatial.jsp";
@@ -51,7 +53,12 @@ function load_layer() {
     url_poly += "&year=" + year;
 
     $.getJSON(url_poly, function (data) {
-        console.log(data['features'].length);
+        console.log("poly: " + data['features'].length);
+        console.log(data);
+    });
+
+    $.getJSON(url_point, function (data) {
+        console.log("point: " + data['features'].length);
         console.log(data);
     })
 
@@ -92,7 +99,7 @@ function load_layer() {
                 else {
                     $("#" + i).html(Math.round((i * diff) / 1000) + "K - " + Math.round(((i + 1) * diff) / 1000) + "K");
                 }
-                $("#legend_title").html('<b>Legend - Layer1 ' + value_param + '</b>');
+                $("#legend_title").html('<b>Legend - ' + value_param.charAt(0).toUpperCase() + value_param.slice(1) + '</b>');
             }
             if (feature.get([value_param]) == 0) {
                 return new ol.style.Style({
@@ -164,7 +171,7 @@ function load_layer() {
     });
 
     geojson = new ol.layer.Vector({
-        title: 'Layer 1 ' + value_param + '(' + year + ')',
+        title: 'Map Layer ' + value_param.charAt(0).toUpperCase() + value_param.slice(1) + '(' + year + ')',
         source: new ol.source.Vector({
             url: url_poly,
             format: new ol.format.GeoJSON(),
@@ -187,7 +194,7 @@ function load_layer() {
     //map.addLayer(geojson);		
     layerSwitcher.renderPanel();
     geojson_point = new ol.layer.Vector({
-        title: 'Layer ' + value_param + '(' + year + ')_circle',
+        title: 'Bubble Layer ' + value_param.charAt(0).toUpperCase() + value_param.slice(1) + '(' + year + ')',
         source: new ol.source.Vector({
             url: url_point,
             format: new ol.format.GeoJSON()
@@ -221,11 +228,12 @@ function load_layer() {
         var date_to_score = Object();
         var score1 = [];
         var score2 = [];
+        console.log(data[0][value_param]);
         for (var i in data) {
             date.push(data[i].year);
             brgy_class.push(data[i].class);
             score.push(data[i][value_param]);
-            console.log(score);
+            console.log(data[i][value_param]);
             date_to_score[data[i].year] = data[i][value_param];
         }
         date.sort(function (a, b) {
@@ -240,7 +248,7 @@ function load_layer() {
             labels: brgy_class,
             datasets: [
                 {
-                    label: 'Butuan ' + value_param + ' by Class (' + year + ')',
+                    label: 'Butuan ' + value_param.charAt(0).toUpperCase() + value_param.slice(1) + ' by Class (' + year + ')',
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.2)',
                         'rgba(54, 162, 235, 0.2)'
@@ -269,7 +277,7 @@ function load_layer() {
                 plugins: {
                     title: {
                         display: true,
-                        text: 'Butuan ' + value_param + ' by Class (' + year + ')'
+                        text: 'Butuan ' + value_param.charAt(0).toUpperCase() + value_param.slice(1) + ' by Class (' + year + ')'
                     }
                 },
                 tooltips: {
@@ -335,7 +343,7 @@ function load_layer() {
             datasets: [
                 {
                     // label: 'COVID '+value_param,
-                    label: 'Barangay ' + value_param + ' Density',
+                    label: 'Barangay ' + value_param.charAt(0).toUpperCase() + value_param.slice(1) + ' Density',
                     backgroundColor: 'rgba(75, 192, 192, 0.2)',
                     borderColor: 'rgb(75, 192, 192)',
                     borderWidth: 1,
@@ -359,7 +367,7 @@ function load_layer() {
                 plugins: {
                     title: {
                         display: true,
-                        text: 'Butuan ' + value_param + ' Density Per Barangay'
+                        text: 'Butuan ' + value_param.charAt(0).toUpperCase() + value_param.slice(1) + ' Density Per Barangay'
                     }
                 },
                 tooltips: {

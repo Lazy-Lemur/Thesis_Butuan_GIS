@@ -2,17 +2,6 @@
     margin: 0;
     padding: 0;
 }
-
-.affix {
-    top: 0;
-    width: 100%;
-    z-index: 9999 !important;
-  }
-
-  .affix + .container-fluid {
-    padding-top: 70px;
-  }
-  
 body {
     background-color: #ebeff5;
     font-family: 'Varela Round', sans-serif;
@@ -43,6 +32,11 @@ body {
     "graph1 graph2"
 }
 
+/* .yearPicker{
+    position: relative;
+    z-index: 100;
+} */
+
 .title {
    grid-area: title;
    text-align: center;
@@ -58,12 +52,10 @@ body {
 }
 
 .header {
-    position: fixed;
     grid-area: header;
     text-align: center;
     vertical-align: middle;
     padding: 15px;
-    position: sticky;
 }
 
 .header input{
@@ -160,14 +152,14 @@ body {
     z-index: 34;
     border-radius: 15px;
     margin: 10px 25px 50px 40px;
-    /*box-shadow: inset 5px 5px 5px rgba(0, 0, 0, 0.05),
+    box-shadow: inset 5px 5px 5px rgba(0, 0, 0, 0.05),
                 inset -5px -5px 5px rgba(255, 255, 255, 0.5),
                 5px 5px 5px rgba(0, 0, 0, 0.05),
-                -5px -5px 5px rgba(255, 255, 255, 0.5); */
+                -5px -5px 5px rgba(255, 255, 255, 0.5);
 }
 
 #legend_title{
-    /* position: relative; */
+    position: relative;
     font-size: 12px;
     color: #21acec;
     /* mix-blend-mode: difference; */
@@ -191,11 +183,11 @@ body {
 #class6, #class5, #class4,
 #class3, #class2, #class1, #class0{
     display: inline-block;
-    margin: 0px 8px -15px -5px;
+    margin: 0px 8px -6px -5px;
     height: 20px;
     width: 25px;
     z-index: 34;
-    /* border-radius: 4px; */
+    border-radius: 4px;
 }
 
 #class6{

@@ -15,7 +15,7 @@ myConnection = DriverManager.getConnection(url,username,password);
 Statement st;
 ResultSet rs;
 st = myConnection.createStatement();
-            String query1 = "SELECT id, brgy, population, employed, unemployed, underemployed, hectares, sqkm, year, class, geom FROM bxu_data";
+            String query1 = "SELECT * FROM bxu_data WHERE id = " + request.getParameter("id")+ ";";
                 rs = st.executeQuery(query1);
 		ResultSetMetaData  meta = rs.getMetaData();
 Integer columncount = meta.getColumnCount();

@@ -15,11 +15,18 @@ myConnection = DriverManager.getConnection(url,username,password);
 Statement st;
 ResultSet rs;
 st = myConnection.createStatement();
-            String query1 = "DELETE FROM bxu_data WHERE brgy LIKE '%"+request.getParameter("brgy")+"%' and year = "+request.getParameter("year")+";";
-            int rowsAffected = st.executeUpdate(query1);
+String query1 = "DELETE FROM bxu_data WHERE brgy LIKE '%"+request.getParameter("brgy")+"%' and year = "+request.getParameter("year")+";";
+int row = st.executeUpdate(query1);
+String success = "";
+if(row > 0){
+       success = "True";
+}
+else{
+       success = "False";
+}
 %>
 [      
  {
-"rowsAffected":"<%= rowsAffected %>"
+"success":"<%= success %>"
  }
 ]
