@@ -25,6 +25,9 @@
     <!-- YearPicker -->
     <link rel="stylesheet" href="static/css/yearpicker.css">
 
+    <!-- Paparse For CSV Reading -->
+    <script src="static/js/papaparse.min.js"></script>
+    <!-- Stylesheet -->
     <link rel="stylesheet" href="static/css/test_style.css">
     
 </head>
@@ -230,23 +233,63 @@
             </div>
         </div>
     </div>
-    <!-- Upload Modal HTML -->
-    <div id="uploadDataModal" class="modal fade">
+    <!-- Delete ALl Modal HTML -->
+    <div id="deleteAllDataModal" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form method="POST" action="#" class="js-geodata-upload-form">
+                <form method="POST" action="static/dbase/delete_all_geodata.jsp" class="js-geodata-delete-all-form">
+                    <input type="hidden" id="hd_brgy" name="">
+                    <input type="hidden" id="hd_year" name="">
                     <div class="modal-header">
-                        <h4 class="modal-title">Update Geodata CSV</h4>
+                        <h4 class="modal-title">Confirm Data Deletion</h4>
                         <span class="close" data-bs-dismiss="modal" aria-hidden="true" ><i class="material-icons">&#xe5cd;</i></span>
                     </div>
                     <div class="modal-body">
-                        <input type="file" class="form-control" name="chooseFile" id="chooseFile" action=".csv, .xlsx"/>
+                        <p id="confirm_delete">Are you sure you want to delete all the data?</p>
+                        <p class="text-warning"><small>This action cannot be undone.</small></p>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="button" value="Cancel" class="btn btn-danger" data-bs-dismiss="modal">
+                        <input type="submit" value="Delete All" class="btn btn-info">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Upload Modal HTML -->
+    <!-- <div id="uploadDataModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form method="POST" class="js-geodata-upload-form">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Upload Geodata CSV</h4>
+                        <span class="close" data-bs-dismiss="modal" aria-hidden="true" ><i class="material-icons">&#xe5cd;</i></span>
+                    </div>
+                    <div class="modal-body">
+                        <input type="file" class="form-control" name="chooseFile" id="chooseFile" accept=".csv" multiple/>
                     </div>
                     <div class="modal-footer">
                         <input type="button" value="Cancel" class="btn btn-danger" data-bs-dismiss="modal">
                         <input type="submit" value="Upload Data" class="btn btn-info">
                     </div>
                 </form>
+            </div>
+        </div>
+    </div> -->
+    <div id="uploadDataModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Upload Geodata CSV</h4>
+                    <span class="close" data-bs-dismiss="modal" aria-hidden="true" ><i class="material-icons">&#xe5cd;</i></span>
+                </div>
+                <div class="modal-body">
+                    <input type="file" class="form-control" name="chooseFile" id="chooseFile" accept=".csv" multiple/>
+                </div>
+                <div class="modal-footer">
+                    <input type="button" value="Cancel" class="btn btn-danger" data-bs-dismiss="modal">
+                    <input type="submit" value="Upload Data" id="upload-submit" class="btn btn-info">
+                </div>
             </div>
         </div>
     </div>

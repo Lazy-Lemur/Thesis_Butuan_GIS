@@ -255,7 +255,6 @@ $(document).ready(function () {
                 }
                 setTimeout($("#promptModal").modal('show'), 700);
                 setTimeout(location.reload.bind(location), 2800);
-                history.go(0);
             }
         });
         return false;
@@ -264,11 +263,227 @@ $(document).ready(function () {
     var load_upload_modal = function () {
         var btn = $(this);
         $('#uploadDataModal').modal("show");
+
+        var data = ['log', 'leg'];
+        var i = 0;
+        console.log(data[i + 1]);
     }
 
     var save_upload_form = function () {
-        var form = $(this);
+        const form = $(this);
+        const csvFile = $('#chooseFile');
 
+        const input = csvFile.files[0];
+        const reader = new FileReader();
+
+        reader.onload = function (e) {
+            const text = e.target.result;
+            const data = csvToArray(text);
+            console.log(text);
+            console.log(JSON.stringify(data));
+        };
+    }
+
+    function csvToArray(str, delimiter = ",") {
+        // slice from start of text to the first \n index
+        // use split to create an array from string by delimiter
+        const headers = str.slice(0, str.indexOf("\n")).split(delimiter);
+        // slice from \n index + 1 to the end of the text
+        // use split to create an array of each csv value row 
+        const rows = str.slice(str.indexOf("\n") + 1).split("\n");
+
+        // Map the rows
+        // split values from each row into an array
+        // use headers.reduce to create an object
+        // object properties derived from headers:values
+        // the object passed as an element of the array
+        const arr = rows.map(function (row) {
+            const values = row.split(delimiter);
+            const el = headers.reduce(function (object, header, index) {
+                object[header] = values[index];
+                return object;
+            }, {});
+            return el;
+        });
+
+        return arr;
+    }
+
+    var read_csv = function (e) {
+        e.preventDefault();
+        $('#chooseFile').parse({
+            config: {
+                delimiter: "auto",
+                header: false,
+                complete: upload_csv,
+            },
+            before: function (file, inputElem) {
+                //console.log("Parsing file...", file);
+            },
+            error: function (err, file) {
+                //console.log("ERROR:", err, file);
+            },
+            complete: function () {
+                //console.log("Done with all files");
+            },
+        });
+    }
+
+    function upload_csv(results) {
+        console.log(results.data);
+        var data = results.data;
+        console.log(data.length);
+        console.log(data[84]);
+        for (i = 1; i < data.length; i++) {
+            var row = data[i];
+            var cells = row.join(",").split(",");
+            new_dataset_interval(cells);
+        }
+    }
+
+    function new_dataset_interval(cells) {
+
+        cells[0] = cells[0].replace(/"/g, "");
+        cells[1] = cells[1].replace(/"/g, "");
+        cells[2] = cells[2].replace(/"/g, "");
+        cells[3] = cells[3].replace(/"/g, "");
+        cells[4] = cells[4].replace(/"/g, "");
+        cells[5] = cells[5].replace(/"/g, "");
+        cells[6] = cells[6].replace(/"/g, "");
+        cells[7] = cells[7].replace(/"/g, "");
+        cells[8] = cells[8].replace(/"/g, "");
+        cells[9] = cells[9].replace(/"/g, "");
+        // cells[10] = cells[10].replace(/"/g, "");
+        console.log(cells[0]);
+        console.log(cells[1]);
+        console.log(cells[2]);
+        console.log(cells[3]);
+        console.log(cells[4]);
+        console.log(cells[5]);
+        console.log(cells[6]);
+        console.log(cells[7]);
+        console.log(cells[8]);
+        console.log(cells[9]);
+        $.ajax({
+            url: "static/dbase/insert_new_data_csv.jsp",
+            type: "POST",
+            data: {
+                id: cells[0],
+                brgy: cells[1],
+                population: cells[2],
+                employed: cells[3],
+                unemployed: cells[4],
+                underemployed: cells[5],
+                hectares: cells[6],
+                sqkm: cells[7],
+                year: cells[8],
+                class: cells[9]
+                // geom: cells[10]
+            },
+            dataType: 'json',
+            success: function (data) {
+                console.log(data);
+                if (data[0].success) {
+                    $('#uploadDataModal').modal('hide');
+                    if (data[0].success == 'True') {
+                        $('#promptModal #message').html("Geodata CSV uploaded successfully.");
+                        $('#promptModal .modal-title').html("Upload Success");
+                    } else {
+                        window.stop();
+                        $('#promptModal #message').html("Failed to upload geodata CSV.");
+                        $('#promptModal .modal-title').html("Upload Failed");
+                    }
+                    setTimeout($("#promptModal").modal('show'), 700);
+                    // setTimeout(location.reload.bind(location), 2800);
+                }
+            }
+        });
+    }
+
+    function existing_dataset_interval(cells) {
+
+        cells[0] = cells[0].replace(/"/g, "");
+        cells[1] = cells[1].replace(/"/g, "");
+        cells[2] = cells[2].replace(/"/g, "");
+        cells[3] = cells[3].replace(/"/g, "");
+        cells[4] = cells[4].replace(/"/g, "");
+        cells[5] = cells[5].replace(/"/g, "");
+        cells[6] = cells[6].replace(/"/g, "");
+        cells[7] = cells[7].replace(/"/g, "");
+        cells[8] = cells[8].replace(/"/g, "");
+        cells[9] = cells[8].replace(/"/g, "");
+        console.log(cells[0]);
+        console.log(cells[1]);
+        console.log(cells[2]);
+        console.log(cells[3]);
+        console.log(cells[4]);
+        console.log(cells[5]);
+        console.log(cells[6]);
+        console.log(cells[7]);
+        console.log(cells[8]);
+        console.log(cells[9]);
+        $.ajax({
+            url: "static/dbase/insert_geodata.jsp",
+            type: "POST",
+            data: {
+                id: cells[0],
+                brgy: cells[1],
+                population: cells[2],
+                employed: cells[3],
+                unemployed: cells[4],
+                underemployed: cells[5],
+                hectares: cells[6],
+                sqkm: cells[7],
+                year: cells[8],
+                class: cells[9]
+            },
+            dataType: 'json',
+            success: function (data) {
+                console.log(data);
+                if (data[0].success) {
+                    $('#uploadDataModal').modal('hide');
+                    if (data[0].success == 'True') {
+                        $('#promptModal #message').html("Geodata CSV uploaded successfully.");
+                        $('#promptModal .modal-title').html("Upload Success");
+                    } else {
+                        window.stop();
+                        $('#promptModal #message').html("Failed to upload geodata CSV.");
+                        $('#promptModal .modal-title').html("Upload Failed");
+                    }
+                    setTimeout($("#promptModal").modal('show'), 700);
+                    // setTimeout(location.reload.bind(location), 2800);
+                }
+            }
+        });
+    }
+
+    var load_delete_all = function () {
+        var btn = $(this);
+        // $('#deleteAllDataModal .modal-body #confirm_delete').html("Delete <b>Brgy. " + brgy + " of " + year + "</b> geodata?");
+        $('#deleteAllDataModal').modal("show");
+    }
+
+    var save_delete_all = function () {
+        var form = $(this);
+        $.ajax({
+            url: form.attr('action'),
+            type: form.attr('method'),
+            dataType: 'json',
+            success: function (data) {
+                console.log(data[0].success);
+                $('#deleteAllDataModal').modal('hide');
+                if (data[0].success == 'True') {
+                    $('#promptModal #message').html("All geodata deleted successfully.");
+                    $('#promptModal .modal-title').html("Delete All Success");
+                } else {
+                    $('#promptModal #message').html("Failed to delete all geodata");
+                    $('#promptModal .modal-title').html("Delete All Failed");
+                }
+                setTimeout($("#promptModal").modal('show'), 700);
+                setTimeout(location.reload.bind(location), 2800);
+            }
+        });
+        return false;
     }
 
     /** Binding */
@@ -285,8 +500,10 @@ $(document).ready(function () {
     $('#deleteDataModal').on('submit', '.js-geodata-delete-form', save_delete_form);
 
     /** Delete All */
-    $('.js-delete-geodata').click(load_delete_modal);
+    $('.js-delete-geodata').click(load_delete_all);
+    $('#deleteAllDataModal').on('submit', '.js-geodata-delete-all-form', save_delete_all);
 
     /** Upload CSV */
     $('.js-upload-csv-geodata').click(load_upload_modal);
+    $('#uploadDataModal #upload-submit').on('click', read_csv);
 });
