@@ -31,6 +31,13 @@ $('#parameter').change(function () {
     load_layer();
 });
 
+
+$('#yearPicker').keyup(function (e) {
+    if (e.key == 'Enter') {
+        load_layer();
+    }
+});
+
 var view = new ol.View({
     projection: 'EPSG:4326',
     center: [82.00, 23.00],

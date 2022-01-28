@@ -20,7 +20,6 @@ String query1 = "INSERT INTO bxu_data (id, brgy, population, employed, unemploye
         + "VALUES ((SELECT MAX(id)+1 FROM bxu_data), '"+request.getParameter("brgy")+"', "+request.getParameter("population")+", "+request.getParameter("employed")+", "+request.getParameter("unemployed")+", "+request.getParameter("underemployed")+", "
         + ""+request.getParameter("hectares")+", "+request.getParameter("sqkm")+", "+request.getParameter("year")+", '"+request.getParameter("class")+"', (SELECT geom FROM bxu_data WHERE brgy LIKE '%"+request.getParameter("brgy")+"%' AND year = 2015));";
 int rows = st.executeUpdate(query1);
-myConnection.close();
 String success = "";
 if(rows > 0){
     success = "True";

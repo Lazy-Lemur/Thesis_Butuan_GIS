@@ -30,7 +30,7 @@ function load_layer() {
     var param = document.getElementById("parameter");
     // var year = null;
 
-    var year = 2015;
+    var year = parseInt($('#yearPicker').val());
     console.log(param);
     console.log(year);
     // start_date = convert_format(start_date);
@@ -403,6 +403,7 @@ function load_layer() {
     });
 
     var url_variables_sum_per_year = "static/dbase/bxu_variables_sum.jsp";
+    url_variables_sum_per_year += "?year=" + year;
 
     $.getJSON(url_variables_sum_per_year, function (data) {
         $("#population").html(numberWithCommas(parseInt(data[0].population, 10)));

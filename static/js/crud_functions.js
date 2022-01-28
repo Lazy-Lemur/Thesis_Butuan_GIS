@@ -254,63 +254,29 @@ $(document).ready(function () {
                     $('#promptModal .modal-title').html("Delete Failed");
                 }
                 setTimeout($("#promptModal").modal('show'), 700);
-                setTimeout(location.reload.bind(location), 2800);
+                setTimeout(location.reload.bind(location), 2000);
             }
         });
         return false;
     }
-
+    var path = ""
     var load_upload_modal = function () {
         var btn = $(this);
         $('#uploadDataModal').modal("show");
-
+        $('#uploadDataModal input[type=file]').change(function (event) {
+            path = event.target.files[0].name;
+            // console.log(event);
+            console.log(path);
+        });
         var data = ['log', 'leg'];
         var i = 0;
         console.log(data[i + 1]);
     }
 
-    var save_upload_form = function () {
-        const form = $(this);
-        const csvFile = $('#chooseFile');
-
-        const input = csvFile.files[0];
-        const reader = new FileReader();
-
-        reader.onload = function (e) {
-            const text = e.target.result;
-            const data = csvToArray(text);
-            console.log(text);
-            console.log(JSON.stringify(data));
-        };
-    }
-
-    function csvToArray(str, delimiter = ",") {
-        // slice from start of text to the first \n index
-        // use split to create an array from string by delimiter
-        const headers = str.slice(0, str.indexOf("\n")).split(delimiter);
-        // slice from \n index + 1 to the end of the text
-        // use split to create an array of each csv value row 
-        const rows = str.slice(str.indexOf("\n") + 1).split("\n");
-
-        // Map the rows
-        // split values from each row into an array
-        // use headers.reduce to create an object
-        // object properties derived from headers:values
-        // the object passed as an element of the array
-        const arr = rows.map(function (row) {
-            const values = row.split(delimiter);
-            const el = headers.reduce(function (object, header, index) {
-                object[header] = values[index];
-                return object;
-            }, {});
-            return el;
-        });
-
-        return arr;
-    }
-
     var read_csv = function (e) {
         e.preventDefault();
+        // var tmppath = URL.createObjectURL(e.target.files[0]);
+        // console.log(tmppath);
         $('#chooseFile').parse({
             config: {
                 delimiter: "auto",
@@ -333,12 +299,38 @@ $(document).ready(function () {
         console.log(results.data);
         var data = results.data;
         console.log(data.length);
-        console.log(data[84]);
-        for (i = 1; i < data.length; i++) {
-            var row = data[i];
-            var cells = row.join(",").split(",");
-            new_dataset_interval(cells);
-        }
+        console.log("path: " + path);
+        // console.log(data[84]);
+        dynamic_upload(path);
+        // for (i = 1; i < data.length; i++) {
+        //     var row = data[i];
+        //     var cells = row.join(",").split(",");
+        //     existing_dataset_interval(cells);
+        // }
+    }
+
+    function dynamic_upload(path) {
+        $.ajax({
+            url: "static/dbase/upload_geodata.jsp",
+            type: "POST",
+            data: {
+                path: path
+            },
+            dataType: 'json',
+            success: function (data) {
+                console.log(data);
+                $('#uploadDataModal').modal('hide');
+                if (data[0].success) {
+                    $('#promptModal #message').html("Geodata CSV uploaded successfully.");
+                    $('#promptModal .modal-title').html("Upload Success");
+                } else {
+                    $('#promptModal #message').html("Failed to upload geodata CSV.");
+                    $('#promptModal .modal-title').html("Upload Failed");
+                }
+                setTimeout($("#promptModal").modal('show'), 700);
+                setTimeout(location.reload.bind(location), 2000);
+            }
+        });
     }
 
     function new_dataset_interval(cells) {

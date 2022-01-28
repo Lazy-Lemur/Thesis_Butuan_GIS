@@ -16,7 +16,7 @@ Statement st;
 ResultSet rs;
 st = myConnection.createStatement();
 //         String query  = "SELECT SUM(daily_cases) as cases,  SUM(daily_deaths) as deaths, SUM(daily_vaccinations) as vaccinations, SUM(daily_tests) as tests FROM world_covid_data where date >= '"+request.getParameter("date1")+"' AND date <= '"+request.getParameter("date2")+"'";
-          String query = "SELECT SUM(population) as population, SUM(employed) as employed, SUM(unemployed) as unemployed, SUM(underemployed) as underemployed FROM bxu_data WHERE year = 2015";
+          String query = "SELECT SUM(population) as population, SUM(employed) as employed, SUM(unemployed) as unemployed, SUM(underemployed) as underemployed FROM bxu_data WHERE year = " + request.getParameter("year")+ ";";
             rs = st.executeQuery(query) ;
 		ResultSetMetaData  meta = rs.getMetaData();
 Integer columncount = meta.getColumnCount();
