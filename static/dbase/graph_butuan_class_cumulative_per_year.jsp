@@ -16,7 +16,9 @@ Statement st;
 ResultSet rs;
 st = myConnection.createStatement();
 //            String query = "SELECT SUM("+request.getParameter("parameter")+") as "+request.getParameter("parameter")+", year FROM bxu_data WHERE year = "+request.getParameter("year")+" GROUP BY year ORDER BY year";	  
-            String query1 = "SELECT SUM("+request.getParameter("parameter")+") as "+request.getParameter("parameter")+", class FROM bxu_data WHERE year = "+request.getParameter("year")+" GROUP BY class ORDER BY class";
+//            String query1 = "SELECT SUM("+request.getParameter("parameter")+") as "+request.getParameter("parameter")+", class FROM bxu_data WHERE year = "+request.getParameter("year")+" GROUP BY class ORDER BY class";
+            String query1 = "SELECT SUM(dyn."+request.getParameter("parameter")+") as "+request.getParameter("parameter")+", stat.class as class FROM static_table as stat, dynamic_table as dyn WHERE dyn.year = "+request.getParameter("year")+" AND stat.brgy = dyn.brgy GROUP BY stat.class ORDER BY stat.class";
+
                 rs = st.executeQuery(query1);
 		ResultSetMetaData  meta = rs.getMetaData();
 Integer columncount = meta.getColumnCount();

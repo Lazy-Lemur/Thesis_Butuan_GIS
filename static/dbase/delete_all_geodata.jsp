@@ -15,7 +15,7 @@ myConnection = DriverManager.getConnection(url,username,password);
 Statement st;
 ResultSet rs;
 st = myConnection.createStatement();
-String query1 = "DELETE FROM bxu_data;";
+String query1 = "DELETE FROM dynamic_table;";
 int row = st.executeUpdate(query1);
 String success = "";
 if(row > 0){

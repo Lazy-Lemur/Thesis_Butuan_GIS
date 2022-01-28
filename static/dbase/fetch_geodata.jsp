@@ -15,9 +15,11 @@ myConnection = DriverManager.getConnection(url,username,password);
 Statement st;
 ResultSet rs;
 st = myConnection.createStatement();
-            String query1 = "SELECT id, brgy, population, employed, unemployed, underemployed, hectares, sqkm, year, class, geom FROM bxu_data ORDER BY id";
-                rs = st.executeQuery(query1);
-		ResultSetMetaData  meta = rs.getMetaData();
+//            String query1 = "SELECT id, brgy, population, employed, unemployed, underemployed, hectares, sqkm, year, class, geom FROM bxu_data ORDER BY id";
+            String query1 = "SELECT dyn.id as id, dyn.brgy as brgy, dyn.population as population, dyn.employed as employed, dyn.unemployed as unemployed, dyn.underemployed as underemployed, stat.hectares as hectares, stat.sqkm as sqkm, dyn.year as year, stat.class as class, stat.geom as gepm FROM static_table as stat, dynamic_table as dyn WHERE stat.brgy = dyn.brgy ORDER BY dyn.id";
+
+            rs = st.executeQuery(query1);
+            ResultSetMetaData  meta = rs.getMetaData();
 Integer columncount = meta.getColumnCount();
        %>
 [

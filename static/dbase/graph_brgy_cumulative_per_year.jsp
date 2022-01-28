@@ -17,7 +17,7 @@ ResultSet rs;
 st = myConnection.createStatement();
 //         String query = "SELECT total_"+request.getParameter("parameter")+" as "+request.getParameter("parameter")+", date FROM world_covid_data where date >= '"+request.getParameter("date1")+"' AND date <= '"+request.getParameter("date2")+"' AND country_name = '"+request.getParameter("country")+"' order by date";
 	String cap = request.getParameter("brgy").substring(0,1).toUpperCase() + request.getParameter("brgy").substring(1);
-        String query = "SELECT "+request.getParameter("parameter")+", brgy, year FROM bxu_data WHERE year = "+request.getParameter("year")+" AND brgy = '"+cap+"' ORDER BY year";
+        String query = "SELECT dyn."+request.getParameter("parameter")+" as "+request.getParameter("parameter")+", stat.brgy as brgy, dyn.year as year FROM static_table as stat, dynamic_table as dyn WHERE dyn.year = "+request.getParameter("year")+" AND stat.brgy = dyn.brgy AND stat.brgy = '"+cap+"' ORDER BY dyn.year";
 		  rs = st.executeQuery(query);
 		ResultSetMetaData  meta = rs.getMetaData();
 Integer columncount = meta.getColumnCount();

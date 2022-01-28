@@ -33,29 +33,25 @@ String filePath = "C:\\Program Files (x86)\\Apache Software Foundation\\Tomcat 9
     while((lineText=lineReader.readLine())!=null){
         String[] data = lineText.split(",");
         
-        String id = data[0];
-        String brgy = data[1];
-        int population = Integer.parseInt(data[2]);
-        int employed = Integer.parseInt(data[3]);
-        int unemployed = Integer.parseInt(data[4]);
-        int underemployed = Integer.parseInt(data[5]);
-        double hectares = Double.parseDouble(data[6]);
-        double sqkm = Double.parseDouble(data[7]);
-        int year = Integer.parseInt(data[8]);
-        String class_br = data[9];
+        String brgy = data[0];
+        int population = Integer.parseInt(data[1]);
+        int employed = Integer.parseInt(data[2]);
+        int unemployed = Integer.parseInt(data[3]);
+        int underemployed = Integer.parseInt(data[4]);
+        int year = Integer.parseInt(data[5]);
         
-       pst = myConnection.prepareStatement("INSERT INTO bxu_data (id, brgy, population, employed, unemployed, underemployed, hectares, sqkm, year, class, geom) "
-        + "VALUES ((SELECT MAX(id)+1 FROM bxu_data), ?, ?, ?, ?, ?, ?, ?, ?, ?, (SELECT geom FROM bxu_data WHERE brgy = '"+brgy+"' AND year = 2015));");
+//       pst = myConnection.prepareStatement("INSERT INTO bxu_data (id, brgy, population, employed, unemployed, underemployed, hectares, sqkm, year, class, geom) "
+//        + "VALUES ((SELECT MAX(id)+1 FROM bxu_data), ?, ?, ?, ?, ?, ?, ?, ?, ?, (SELECT geom FROM bxu_data WHERE brgy = '"+brgy+"' AND year = 2015));");
+        
+        pst = myConnection.prepareStatement("INSERT INTO dynamic_table (id, brgy, population, employed, unemployed, underemployed, year) "
+        + "VALUES ((SELECT COUNT(id)+1 FROM dynamic_table), ?, ?, ?, ?, ?, ? );");
         
         pst.setString(1, brgy);
         pst.setInt(2, population);
         pst.setInt(3, employed);
         pst.setInt(4, unemployed);
         pst.setInt(5, underemployed);
-        pst.setDouble(6, hectares);
-        pst.setDouble(7, sqkm);
-        pst.setInt(8, year);
-        pst.setString(9, class_br);
+        pst.setInt(6, year);
 //        pst.addBatch();
         rows = pst.executeUpdate();
         pst.close();

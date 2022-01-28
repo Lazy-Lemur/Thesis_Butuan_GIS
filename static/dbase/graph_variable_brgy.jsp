@@ -15,8 +15,9 @@ myConnection = DriverManager.getConnection(url,username,password);
 Statement st;
 ResultSet rs;
 st = myConnection.createStatement();
-        String query = "SELECT "+request.getParameter("parameter")+", brgy, sqkm FROM bxu_data WHERE year = "+request.getParameter("year")+" ";
-         
+//        String query = "SELECT "+request.getParameter("parameter")+", brgy, sqkm FROM bxu_data WHERE year = "+request.getParameter("year")+" ";
+        String query = "SELECT dyn."+request.getParameter("parameter")+" as "+request.getParameter("parameter")+", stat.brgy as brgy, stat.sqkm as sqkm FROM static_table as stat, dynamic_table as dyn WHERE dyn.year = "+request.getParameter("year")+" AND stat.brgy = dyn.brgy ";
+
         rs = st.executeQuery(query);
 	ResultSetMetaData  meta = rs.getMetaData();
 Integer columncount = meta.getColumnCount();

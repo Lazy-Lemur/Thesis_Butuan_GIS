@@ -16,7 +16,7 @@ ResultSet rs;
 st = myConnection.createStatement();
 //         String query = "SELECT daily_"+request.getParameter("parameter")+" as "+request.getParameter("parameter")+", date FROM world_covid_data where date >= '"+request.getParameter("date1")+"' AND date <= '"+request.getParameter("date2")+"' AND country_name = '"+request.getParameter("country")+"' order by date";
 //String query = "SELECT "+request.getParameter("parameter")+", year FROM bxu_data WHERE year = "+request.getParameter("year")+" AND brgy = '"+request.getParameter("brgy")+"' ORDER BY year";
-String query = "SELECT population, employed, unemployed, underemployed, year FROM bxu_data WHERE year = "+request.getParameter("year")+" AND brgy = '"+request.getParameter("brgy")+"' ORDER BY year";
+String query = "SELECT dyn.population as population, dyn.employed as employed, dyn.unemployed as unemployed, dyn.underemployed as underemployed, dyn.year as year FROM static_table as stat, dynamic_table as dyn WHERE dyn.year = "+request.getParameter("year")+" AND stat.brgy = dyn.brgy AND stat.brgy = '"+request.getParameter("brgy")+"' ORDER BY dyn.year";
 rs = st.executeQuery(query);
 ResultSetMetaData  meta = rs.getMetaData();
 Integer columncount = meta.getColumnCount();
