@@ -1,7 +1,7 @@
 <%@page import="java.io.FileReader"%>
 <%@page import="java.io.BufferedReader"%>
 <%@ page import="java.sql.*" %>
-
+<%@ page import="java.nio.file.Paths" %>
 
        <%
 	   
@@ -17,15 +17,13 @@ Statement st;
 //ResultSet rs;
 int rows = 0;
 int batchSize = 20;
+//String filename = request.getParameter("filepath");
+//String filePath = "C:\\Program Files (x86)\\Apache Software Foundation\\Tomcat 9.0\\webapps\\thesis_butuan_gis\\uploads\\dataset_2010_with_id.csv"
 String filePath = "C:\\Program Files (x86)\\Apache Software Foundation\\Tomcat 9.0\\webapps\\thesis_butuan_gis\\static\\dbase\\dataset_2010_with_id.csv";
-
+//String filePath = "C:\\Users\\LENOVO-PC\\OneDrive\\Desktop\\Thesis Folder\\datasets\\for demo\\dataset_2010_with_id.csv";
+//Path filePath = Paths.get("C:\\Users\\LENOVO-PC\\OneDrive\\Desktop\\Thesis Folder\\datasets\\for demo\\", filePath);
+    
     myConnection = DriverManager.getConnection(url,username,password);
-
-//    String query1 = "INSERT INTO bxu_data (id, brgy, population, employed, unemployed, underemployed, hectares, sqkm, year, class, geom) "
-//        + "VALUES ((SELECT MAX(id)+1 FROM bxu_data), '"+request.getParameter("brgy")+"', "+request.getParameter("population")+", "+request.getParameter("employed")+", "+request.getParameter("unemployed")+", "+request.getParameter("underemployed")+", "
-//        + ""+request.getParameter("hectares")+", "+request.getParameter("sqkm")+", "+request.getParameter("year")+", '"+request.getParameter("class")+"', (SELECT geom FROM bxu_data WHERE brgy LIKE '%"+request.getParameter("brgy")+"%' AND year = 2015));";
-//    int rows = st.executeUpdate(query1);
-//      st = myConnection.createStatement();
     myConnection.setAutoCommit(false);
     
     BufferedReader lineReader = new BufferedReader(new FileReader(filePath));
@@ -67,6 +65,7 @@ String filePath = "C:\\Program Files (x86)\\Apache Software Foundation\\Tomcat 9
 //        }
     }
     
+
     lineReader.close();
 //    pst.executeBatch();
     myConnection.commit();

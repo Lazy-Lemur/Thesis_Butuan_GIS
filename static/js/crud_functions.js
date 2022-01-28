@@ -300,8 +300,29 @@ $(document).ready(function () {
         var data = results.data;
         console.log(data.length);
         console.log("path: " + path);
+        $.ajax({
+            url: "static/dbase/upload_geodata.jsp",
+            type: "POST",
+            data: {
+                filepath: path
+            },
+            dataType: 'json',
+            success: function (data) {
+                console.log(data);
+                $('#uploadDataModal').modal('hide');
+                if (data[0].success) {
+                    $('#promptModal #message').html("Geodata CSV uploaded successfully.");
+                    $('#promptModal .modal-title').html("Upload Success");
+                } else {
+                    $('#promptModal #message').html("Failed to upload geodata CSV.");
+                    $('#promptModal .modal-title').html("Upload Failed");
+                }
+                setTimeout($("#promptModal").modal('show'), 700);
+                setTimeout(location.reload.bind(location), 2000);
+            }
+        });
         // console.log(data[84]);
-        dynamic_upload(path);
+        // dynamic_upload(path);
         // for (i = 1; i < data.length; i++) {
         //     var row = data[i];
         //     var cells = row.join(",").split(",");
@@ -309,12 +330,12 @@ $(document).ready(function () {
         // }
     }
 
-    function dynamic_upload(path) {
+    function dynamic_upload(filepath) {
         $.ajax({
             url: "static/dbase/upload_geodata.jsp",
             type: "POST",
             data: {
-                path: path
+                filepath: filepath
             },
             dataType: 'json',
             success: function (data) {
