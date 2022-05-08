@@ -12,40 +12,63 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="static/css/login_style.css">
-    <body>
-        <div class="text-center">
-            <!-- Button HTML (to Trigger Modal) -->
-            <a href="#myModal" class="trigger-btn" data-toggle="modal">Click to Open Login Modal</a>
-        </div>
-        
-        <!-- Modal HTML -->
-        <div id="myModal" class="modal fade">
-            <div class="modal-dialog modal-login">
-                <div class="modal-content">
-                    <div class="modal-header">				
-                        <h4 class="modal-title">Member Login</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+<body>
+    <div class="signup-form">
+        <form action="" method="post">
+            <h2>Sign Up</h2>
+            <p>Please fill in this form to create and account!</p>
+            <hr>
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">
+                            <span class="fa fa-user"></span>
+                        </span>
                     </div>
-                    <div class="modal-body">
-                        <form action="/examples/actions/confirmation.php" method="post">
-                            <div class="form-group">
-                                <i class="fa fa-user"></i>
-                                <input type="text" class="form-control" placeholder="Username" required="required">
-                            </div>
-                            <div class="form-group">
-                                <i class="fa fa-lock"></i>
-                                <input type="password" class="form-control" placeholder="Password" required="required">					
-                            </div>
-                            <div class="form-group">
-                                <input type="submit" class="btn btn-primary btn-block btn-lg" value="Login">
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <a href="#">Forgot Password?</a>
-                    </div>
+                    <input type="text" name="username" placeholder="Username" required id="" class="form-control">
                 </div>
             </div>
-        </div>     
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">
+                            <i class="fa fa-paper-plane"></i>
+                        </span>
+                    </div>
+                    <input type="email" name="email" placeholder="Email Address" required class="form-control" id="">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">
+                            <i class="fa fa-lock"></i>
+                        </span>
+                    </div>
+                    <input type="text" name="password" placeholder="Password" required id="" class="form-control">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">
+                            <i class="fa fa-lock"></i>
+                            <i class="fa fa-check"></i>
+                        </span>
+                    </div>
+                    <input type="text" name="confirm_password" required placeholder="Confirm Password" id="" class="form-control">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="form-check-label">
+                    <input type="checkbox" name="" required id=""> I accept the <a href="#">Terms of Use</a> &amp; <a href="#">Privacy Policy</a>
+                </label>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary btn-lg">Sign Up</button>
+            </div>
+        </form>
+        <div class="text-center">Already have an account? <a href="#">Login here</a></div>
+    </div>
 </body>
 </html>
