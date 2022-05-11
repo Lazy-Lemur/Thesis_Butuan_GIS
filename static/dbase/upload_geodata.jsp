@@ -19,7 +19,7 @@ int rows = 0;
 int batchSize = 20;
 //String filename = request.getParameter("filepath");
 //String filePath = "C:\\Program Files (x86)\\Apache Software Foundation\\Tomcat 9.0\\webapps\\thesis_butuan_gis\\uploads\\dataset_2010_with_id.csv"
-String filePath = "C:\\Program Files (x86)\\Apache Software Foundation\\Tomcat 9.0\\webapps\\thesis_butuan_gis\\static\\dbase\\dataset_2010_with_id.csv";
+String filePath = "C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0\\webapps\\thesis_butuan_gis\\static\\dbase\\dataset_2010_with_id.csv";
 //String filePath = "C:\\Users\\LENOVO-PC\\OneDrive\\Desktop\\Thesis Folder\\datasets\\for demo\\dataset_2010_with_id.csv";
 //Path filePath = Paths.get("C:\\Users\\LENOVO-PC\\OneDrive\\Desktop\\Thesis Folder\\datasets\\for demo\\", filePath);
     
