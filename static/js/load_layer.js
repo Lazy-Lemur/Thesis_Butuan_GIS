@@ -45,12 +45,12 @@ function load_layer() {
     url_max += "&year=" + year;
 
     var url_point = "static/dbase/bxu_layer_point_spatial.jsp";
-    // url_point += "?parameter=" + value_param;
-    url_point += "?year=" + year;
+    url_point += "?parameter=" + value_param;
+    url_point += "&year=" + year;
 
     var url_poly = "static/dbase/bxu_layer_spatial.jsp";
-    // url_poly += "?parameter=" + value_param;
-    url_poly += "?year=" + year;
+    url_poly += "?parameter=" + value_param;
+    url_poly += "&year=" + year;
 
     $.getJSON(url_poly, function (data) {
         console.log("poly: " + data['features'].length);
