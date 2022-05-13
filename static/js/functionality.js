@@ -1,9 +1,14 @@
 $(document).ready(function () {
 
-  // $('.yearPicker').yearpicker({
-  //   year: 2015,
-  //   startYear: 1930,
-  //   endYear: 2050
+  $('.yearPicker').yearpicker({
+    year: 2015,
+    startYear: 1930,
+    endYear: 2050
+  });
+
+  // $('#yearPicker').datetimepicker({
+  //   format: 'YYYY',
+  //   viewMode: 'years'
   // });
 
   // Activate tooltip
