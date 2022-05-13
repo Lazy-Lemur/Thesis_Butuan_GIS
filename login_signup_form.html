@@ -46,28 +46,28 @@
                 </form>
             </div>
 
-            <div class="signup-signup">
-                <form action="#" class="sign-up-form">
+            <div class="signup-signup" id="sign-up">
+                <form method="POST" action="static/dbase/register_employee.jsp" class="sign-up-form">
                     <h2 class="title-head">Sign up</h2>
                     <div class="input-field">
                         <i class="fas fa-user"></i>
-                        <input type="text" name="" placeholder="First Name" id="">
+                        <input type="text" name="first_name" placeholder="First Name" id="first_name">
                     </div>
                     <div class="input-field">
                         <i class="fas fa-user"></i>
-                        <input type="text" name="" placeholder="Last Name" id="">
+                        <input type="text" name="last_name" placeholder="Last Name" id="last_name">
                     </div>
                     <div class="input-field">
                         <i class="fas fa-envelope"></i>
-                        <input type="text" name="" placeholder="Email Address" id="">
+                        <input type="text" name="email" placeholder="Email Address" id="email">
                     </div>
                     <div class="input-field">
                         <i class="fas fa-lock"></i>
-                        <input type="password" name="" placeholder="Password" id="">
+                        <input type="password" name="password" placeholder="Password" id="password">
                     </div>
                     <div class="input-field">
                         <i class="fas fa-lock"></i>
-                        <input type="password" name="" placeholder="Confirm Password" id="">
+                        <input type="password" name="confirm_password" placeholder="Confirm Password" id="confirm_password">
                     </div>
                     <input type="submit" value="Sign up" class="btn-submit solid-style">
                     <p class="social-text">Or Sign up with social platforms</p>
