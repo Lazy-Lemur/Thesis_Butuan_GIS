@@ -104,7 +104,7 @@ body {
  }
 
  .graph1 canvas{
-    min-height: 200px;
+    min-height: 180px;
     max-width: 320px;
     padding: 10px 20px 10px 15px;
     border-radius: 10px;
@@ -112,7 +112,7 @@ body {
 }
 
 .graph2 canvas{
-    min-height: 200px;
+    min-height: 180px;
     max-width: 320px;
     padding: 10px 20px 10px 15px;
     border-radius: 10px;
@@ -130,7 +130,7 @@ body {
 /* Status */ 
 .status {
     margin-top: 20px;
-    margin-bottom: -20px;
+    margin-bottom: 20px;
 }
 
 #pop{
