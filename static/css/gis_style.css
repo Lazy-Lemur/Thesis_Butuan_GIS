@@ -88,8 +88,8 @@ body {
     vertical-align: middle;
     /* padding: 20px; */
     min-height: 200px;
-    max-width: 250px;
-    border-right: 1px solid rgba(0, 0, 0, 0.2);
+    max-width: 350px;
+    /* border-right: 1px solid rgba(0, 0, 0, 0.2); */
  }
 
  .graph2 {
@@ -98,27 +98,26 @@ body {
     vertical-align: middle;
     /* padding: 20px; */
     min-height: 200px;
-    max-width: 250px;
+    max-width: 350px;
     /* border: 1px solid #000; */
 
  }
 
  .graph1 canvas{
-    /* min-height: 300px;
-    max-height: 400px; */
+    min-height: 200px;
+    max-width: 320px;
     padding: 10px 20px 10px 15px;
     border-radius: 10px;
     background-color: white;
 }
 
 .graph2 canvas{
-    /* min-height: 300px;
-    max-height: 400px; */
+    min-height: 200px;
+    max-width: 320px;
     padding: 10px 20px 10px 15px;
     border-radius: 10px;
     background-color: white;
 }
-
 
 /* .grid div:nth-child(even){
     background-color: red;
@@ -129,6 +128,11 @@ body {
 } */
 
 /* Status */ 
+.status {
+    margin-top: 20px;
+    margin-bottom: -20px;
+}
+
 #pop{
     background-color: #ff968a;
 }
@@ -143,6 +147,24 @@ body {
 
 #underemp{
     background-color: #55cbcd;
+}
+
+.card-info {
+    /* box-sizing: border-box; */
+    padding: 10px 10px;
+    border-radius: 5px;
+    height: 85px;
+    width: 200px;
+    margin: auto;
+}
+
+.card-info-header {
+    border-bottom: 1px solid rgba(0,0,0,0.10);
+}
+
+.card-info-body{
+    padding: 5px;
+    /* font-size: 13px; */
 }
 
 /* Legend Card */
