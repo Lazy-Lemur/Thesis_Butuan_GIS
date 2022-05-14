@@ -89,6 +89,7 @@ body {
     /* padding: 20px; */
     min-height: 200px;
     max-height: 350px;
+    max-width: 350px;
     /* border-right: 1px solid rgba(0, 0, 0, 0.2); */
  }
 
@@ -99,21 +100,26 @@ body {
     /* padding: 20px; */
     min-height: 200px;
     max-height: 350px;
+    max-width: 350px;
     /* border: 1px solid #000; */
 
  }
 
  .graph1 canvas{
-    min-height: 180px;
+    min-height: 200px;
     max-height: 320px;
+    max-width: 300px;
+    width: 100%;
     padding: 10px 20px 10px 15px;
     border-radius: 10px;
     background-color: white;
 }
 
 .graph2 canvas{
-    min-height: 180px;
+    min-height: 200px;
     max-height: 320px;
+    max-width: 300px;
+    width: 100%;
     padding: 10px 20px 10px 15px;
     border-radius: 10px;
     background-color: white;
