@@ -234,7 +234,9 @@ canvas, .fore{
 #modal-canvas1 canvas {
     min-height: 300px;
     max-height: 500px;
-    width: 100%
+    max-width: 800px;
+    width: 100%;
+    margin: 0;
 }
 
 /* Modal Canvas 2 */
@@ -314,7 +316,9 @@ canvas, .fore{
 #modal-canvas2 canvas {
     min-height: 300px;
     max-height: 500px;
-    width: 100%
+    max-width: 800px;
+    width: 100%;
+    margin: 0;
 }
 
 /* .grid div:nth-child(even){
