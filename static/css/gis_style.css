@@ -157,6 +157,8 @@ canvas, .fore{
     transform: scale(0.98);
 } 
 
+/* Modal Canvas 1 */
+
 #modal-container1 {
     position: fixed;
     background-color: rgba(0,0,0,0.7);
@@ -186,6 +188,46 @@ canvas, .fore{
     animation: unfoldOut 1s 0.3s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
 }
 
+#modal-canvas1{
+    background-color: #fff;
+    width: 600px;
+    max-width: 100%;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    text-align: center;
+    margin: 0;
+    display: flex;
+    flex-direction: row-reverse;
+    transform: scale(0);
+}
+
+#modal-canvas1.zoomIn {
+    animation: zoomIn 0.5s 1.2s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+}
+
+#modal-canvas1.out {
+    animation: zoomOut 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+}
+
+#modal-canvas1 span {
+    /* border: 1px solid red; */
+    margin-top: -0.4rem;
+    margin-right: -0.3rem;
+    position: relative;
+    z-index: 10;
+    max-width: fit-content;
+}
+
+#modal-canvas1 span i {
+    cursor: pointer;
+}
+
+#modal-canvas1 div{
+    z-index: 3;
+}
+
+/* Modal Canvas 2 */
 
 #modal-container2 {
     position: fixed;
@@ -216,7 +258,7 @@ canvas, .fore{
     animation: unfoldOut 1s 0.3s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
 }
 
-#modal-canvas{
+#modal-canvas2{
     background-color: #fff;
     width: 600px;
     max-width: 100%;
@@ -230,15 +272,15 @@ canvas, .fore{
     transform: scale(0);
 }
 
-#modal-canvas.zoomIn {
+#modal-canvas2.zoomIn {
     animation: zoomIn 0.5s 1.2s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
 }
 
-#modal-canvas.out {
+#modal-canvas2.out {
     animation: zoomOut 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
 }
 
-#modal-canvas span {
+#modal-canvas2 span {
     /* border: 1px solid red; */
     margin-top: -0.4rem;
     margin-right: -0.3rem;
@@ -247,11 +289,11 @@ canvas, .fore{
     max-width: fit-content;
 }
 
-#modal-canvas span i {
+#modal-canvas2 span i {
     cursor: pointer;
 }
 
-#modal-canvas div{
+#modal-canvas2 div{
     z-index: 3;
 }
 
