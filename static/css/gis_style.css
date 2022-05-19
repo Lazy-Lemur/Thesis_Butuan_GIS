@@ -7,6 +7,10 @@ body {
     font-family: 'Varela Round', sans-serif;
 }
 
+body.modal-active {
+    overflow: hidden;
+}
+
 ::-webkit-scrollbar{
     width: 16px;
 }
@@ -91,6 +95,8 @@ body {
     max-height: 350px;
     margin-right: 20px;
     max-width: 350px;
+    
+    position: relative;
     /* border-right: 1px solid rgba(0, 0, 0, 0.2); */
  }
 
@@ -102,16 +108,14 @@ body {
     min-height: 180px;
     max-height: 350px;
     max-width: 350px;
+    
+    position: relative;
     /* border: 1px solid #000; */
 
  }
 
  .graph1 canvas{
     /* min-height: 200px; */
-    max-height: 180px;
-    max-width: 350px;
-    height: 100%;
-    width: 100%;
     padding: 10px 20px 10px 15px;
     border-radius: 10px;
     background-color: white;
@@ -119,13 +123,136 @@ body {
 
 .graph2 canvas{
     /* min-height: 200px; */
-    max-height: 180px;
-    max-width: 350px;
-    height: 100%;
-    width: 100%;
     padding: 10px 20px 10px 15px;
     border-radius: 10px;
     background-color: white;
+}
+
+canvas {
+    z-index: 5;
+}
+
+canvas, .fore{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    max-height: 180px;
+    max-width: 350px;
+    top: 0;
+    left: 0;
+}
+
+.fore {
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.0);
+    border-radius: 10px;
+    transition: 0.5s ease-in;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.fore:hover {
+    background: rgba(0, 0, 0, 0.5);
+    transform: scale(0.98);
+} 
+
+#modal-container1 {
+    position: fixed;
+    background-color: rgba(0,0,0,0.7);
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+    /* opacity: 0;
+    pointer-events: none; */
+    transform: scale(0);
+    z-index: 50;
+    transition: opacity 0.8s ease-out;
+}
+
+#modal-container1.show {
+    /* opacity: 1;
+    pointer-events: auto; */
+    transform: scaleY(0.01) scaleX(0);
+    animation: unfoldIn 1s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+}
+
+#modal-container1.out {
+    transform: scale(1);
+    animation: unfoldOut 1s 0.3s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+}
+
+
+#modal-container2 {
+    position: fixed;
+    background-color: rgba(0,0,0,0.7);
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+    /* opacity: 0;
+    pointer-events: none; */
+    transform: scale(0);
+    z-index: 50;
+    transition: opacity 0.8s ease-out;
+}
+
+#modal-container2.show {
+    /* opacity: 1;
+    pointer-events: auto; */
+    transform: scaleY(0.01) scaleX(0);
+    animation: unfoldIn 1s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+}
+
+#modal-container2.out {
+    transform: scale(1);
+    animation: unfoldOut 1s 0.3s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+}
+
+#modal-canvas{
+    background-color: #fff;
+    width: 600px;
+    max-width: 100%;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    text-align: center;
+    margin: 0;
+    display: flex;
+    flex-direction: row-reverse;
+    transform: scale(0);
+}
+
+#modal-canvas.zoomIn {
+    animation: zoomIn 0.5s 1.2s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+}
+
+#modal-canvas.out {
+    animation: zoomOut 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+}
+
+#modal-canvas span {
+    /* border: 1px solid red; */
+    margin-top: -0.4rem;
+    margin-right: -0.3rem;
+    position: relative;
+    z-index: 10;
+    max-width: fit-content;
+}
+
+#modal-canvas span i {
+    cursor: pointer;
+}
+
+#modal-canvas div{
+    z-index: 3;
 }
 
 /* .grid div:nth-child(even){
@@ -302,4 +429,50 @@ body {
 
 .ol-popup-closer:after{
     content: "X";
+}
+
+/* Modal Animations */
+
+@keyframes unfoldIn{
+    0% {
+        transform: scaleY(0.005) scaleX(0);
+    }
+    50% {
+        transform: scaleY(0.005) scaleX(1);
+    }
+
+    100% {
+        transform: scaleY(1) scaleX(1);
+    }
+}
+
+@keyframes unfoldOut {
+    0% {
+        transform: scaleY(1) scaleX(1);
+    }
+
+    50% {
+        transform: scaleY(0.005) scaleX(1);
+    }
+    100% {
+        transform: scaleY(0.005) scaleX(0);
+    }
+}
+
+@keyframes zoomIn {
+    0% {
+        transform: scale(0);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes zoomOut {
+    0% {
+        transform: scale(1);
+    }
+    100% {
+        transform:scale(0);
+    }
 }

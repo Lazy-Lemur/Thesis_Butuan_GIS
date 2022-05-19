@@ -42,6 +42,10 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round" />
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@300&display=swap" rel="stylesheet" />
 
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" referrerpolicy="no-referrer"
+    />
+
     <!-- External Static -->
     <link rel="stylesheet" href="static/css/gis_style.css">
     <!-- <link rel="stylesheet" href="static/css/card_style.css"> -->
@@ -167,8 +171,47 @@
             </div>
 
         </div>
-        <div class="graph1"><canvas id="mycanvas1"></canvas></div>
-        <div class="graph2"><canvas id="mycanvas2"></canvas></div>
+        <div class="graph1">
+            <canvas id="mycanvas1"></canvas>
+            <div class="fore" id="gr_pop1">
+                
+            </div>
+        </div>
+        <div class="graph2">
+            <canvas id="mycanvas2"></canvas>
+            <div class="fore" id="gr_pop2">
+                
+            </div>
+        </div>
+        <div id="modal-container1">
+            <div id="modal-canvas">
+                <span id="close1">
+                    <i class="fas fa-times"></i>
+                </span>
+                <canvas id="mycanvas1"></canvas>
+                <!-- <div class="canvas">
+                    <h1>Modal check 1</h1>
+                    <p>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum, assumenda. Maiores magni quam dicta voluptates quas assumenda quis culpa? Iure vel voluptatem iste perspiciatis ex necessitatibus ut voluptates, vero molestias.
+                    </p>
+                </div> -->
+            </div>
+        </div>
+
+        <div id="modal-container2">
+            <div id="modal-canvas">
+                <span id="close2">
+                    <i class="fas fa-times"></i>
+                </span>
+                <canvas id="mycanvas2"></canvas>
+                <!-- <div class="canvas">
+                    <h1>Modal check 2</h1>
+                    <p>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum, assumenda. Maiores magni quam dicta voluptates quas assumenda quis culpa? Iure vel voluptatem iste perspiciatis ex necessitatibus ut voluptates, vero molestias.
+                    </p>
+                </div> -->
+            </div>
+        </div>
         <div id="popup" class="ol-popup">
             <a href="#" id="popup-closer" class="ol-popup-closer"></a>
             <div id="popup-content"></div>
@@ -179,6 +222,7 @@
     <script src="static/js/click_graph.js"></script>
     <script src="static/js/load_layer.js"></script>
     <script src="static/js/map.js"></script>
+    <script src="static/js/graph_modal.js"></script>
     <!-- <script src="static/js/charts.js"></script> -->
 
 </body>
