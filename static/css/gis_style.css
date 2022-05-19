@@ -236,7 +236,7 @@ canvas, .fore{
     max-height: 500px;
     max-width: 800px;
     width: 100%;
-    margin: 0;
+    margin: 20px 30px;
 }
 
 /* Modal Canvas 2 */
@@ -318,7 +318,7 @@ canvas, .fore{
     max-height: 500px;
     max-width: 800px;
     width: 100%;
-    margin: 0;
+    margin: 20px 30px;
 }
 
 /* .grid div:nth-child(even){
