@@ -190,8 +190,12 @@ canvas, .fore{
 
 #modal-canvas1{
     background-color: #fff;
-    width: 600px;
-    max-width: 100%;
+    min-width: 400px;
+    max-width: 800px;
+    min-height: 300px; 
+    max-height: 500px;
+    width: 100%;
+    height: 100%;
     padding: 20px;
     border-radius: 15px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.2);
@@ -227,6 +231,12 @@ canvas, .fore{
     z-index: 3;
 }
 
+#modal-canvas1 canvas {
+    min-height: 300px;
+    max-height: 500px;
+    width: 100%
+}
+
 /* Modal Canvas 2 */
 
 #modal-container2 {
@@ -260,8 +270,12 @@ canvas, .fore{
 
 #modal-canvas2{
     background-color: #fff;
-    width: 600px;
-    max-width: 100%;
+    min-width: 400px;
+    max-width: 800px;
+    min-height: 300px; 
+    max-height: 500px;
+    width: 100%;
+    height: 100%;
     padding: 20px;
     border-radius: 15px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.2);
@@ -295,6 +309,12 @@ canvas, .fore{
 
 #modal-canvas2 div{
     z-index: 3;
+}
+
+#modal-canvas2 canvas {
+    min-height: 300px;
+    max-height: 500px;
+    width: 100%
 }
 
 /* .grid div:nth-child(even){
