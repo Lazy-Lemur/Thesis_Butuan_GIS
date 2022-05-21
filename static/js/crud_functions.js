@@ -266,7 +266,7 @@ $(document).ready(function () {
         $('#uploadDataModal input[type=file]').change(function (event) {
             path = event.target.files[0].name;
             // console.log(event);
-            console.log(this.files[0].mozFullPath);
+            console.log(URL.createObjectURL(event.target.files[0]));
         });
         var data = ['log', 'leg'];
         var i = 0;
@@ -300,7 +300,7 @@ $(document).ready(function () {
         var data = results.data;
         console.log(data.length);
         console.log("path: " + path);
-        console.log(new ForeData(this));
+        console.log(new FormData(this));
         $.ajax({
             url: "static/dbase/upload_geodata.jsp",
             type: "POST",
