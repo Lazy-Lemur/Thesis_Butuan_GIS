@@ -24,8 +24,9 @@ $(document).ready(function() {
                 else{
                     $('#promptModal #message').html(data[0].success);
                     $('#promptModal .modal-title').html("Login Error");
+
+                    $('#promptModal').modal('show');
                 }
-                $('#promptModal').modal('show');
             }
         });
 
