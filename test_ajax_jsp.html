@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AJAX in JSP</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+      input[type="text"] {
+        height: 23px;
+        width: 250px;
+      }
+      input[type="submit"] {
+        color: white;
+        font-size: 20px;
+        background-color: darkmagenta;
+        height: 50px;
+        width: 150px;
+        border: none;
+        text-align: center;
+      }
+      input[type="submit"]:hover {
+        background: #ccc;
+        color: blue;
+      }
+      #bg {
+        background-color: gray;
+        height: 400px;
+        width: 500px;
+        text-align: center;
+        margin: 0 auto;
+        padding: 10px;
+        margin-top: 30px;
+        color: yellow;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="bg">
+      <h1>AJAX in JSP using POST Method</h1>
+      <hr style="border: double; color: #eee" />
+      <table cellpadding="5" align="center">
+        <tr>
+          <th align="right">First Name:</th>
+          <td>
+            <input type="text" name="fname" id="fname" />
+          </td>
+          <td>
+            <a href="database.html" target="_blank" rel="noopener noreferrer">Data</a>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2" align="right">
+            <input type="submit" id="sub" name="" />
+          </td>
+        </tr>
+      </table>
+      <hr />
+      <div id="msg"></div>
+    </div>
+    <script>
+      $(document).ready(function () {
+        $("#sub").click(function () {
+          var fname = $("#fname").val();
+          $.post("welcome.jsp", { FirstName: fname }, function (data) {
+            $("#msg").html(data);
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
