@@ -52,7 +52,7 @@
                 <a href="#" class="nav-link">GeoData</a>
             </li>
         </ul>
-        <a href="main_gis.html" class="btn-logout">Logout</a>
+        <a href="logout" class="btn-logout">Logout</a>
     </header>
     <div class="container">
         <div class="table-wrapper">
