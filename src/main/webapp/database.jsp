@@ -1,3 +1,9 @@
+<% 
+	if(session.getAttribute("name") == null) {
+		response.sendRedirect("login_signup_form.jsp");
+	}
+%>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

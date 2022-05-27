@@ -24,6 +24,7 @@ public class EncryptPassword {
 		String pass2 = "qwerty123";
 		
 		System.out.println(getHash(pass1.getBytes(),"MD5"));
+		System.out.println(String.format("%s %s", "Alex", "Ella"));
 		
 		if(getHash(pass1.getBytes(), "MD5").equals(getHash(pass2.getBytes(), "MD5"))) {
 			System.out.println("password matched!");

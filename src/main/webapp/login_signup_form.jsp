@@ -13,15 +13,16 @@
     />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="static/css/login_signup_style.css">
-
+	<link rel="stylesheet" href="alert/dist/sweetalert.css">
 </head>
 
 <body>
     <div class="main_container">
         <div class="forms-container">
             <div class="signin-signup" id="sign-in">
-                <form method="POST" action="static/dbase/login_employee.jsp" class="sign-in-form">
+                <form method="POST" action="login" class="sign-in-form">
                     <h2 class="title-head">Sign in</h2>
+                    <input type="hidden" id="status_login" value="<%= request.getAttribute("status_login") %>">
                     <div class="input-field">
                         <i class="fas fa-envelope"></i>
                         <input type="text" name="email" placeholder="Email Address" id="email">
@@ -50,8 +51,9 @@
             </div>
 
             <div class="signup-signup" id="sign-up">
-                <form method="POST" action="static/dbase/register_employee.jsp" class="sign-up-form">
+                <form method="POST" action="register" class="sign-up-form">
                     <h2 class="title-head">Sign up</h2>
+                    <input type="hidden" id="status_reg" value="<%= request.getAttribute("status_reg") %>">
                     <div class="input-field">
                         <i class="fas fa-user"></i>
                         <input type="text" name="first_name" placeholder="First Name" id="first_name">
@@ -131,7 +133,23 @@
     </div>
 
     <script src="static/js/login_signup_script.js"></script>
-    <script src="static/js/employee_authorization_process.js"></script>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	
+	<script type="text/javascript">
+		var status_login = document.getElementById("status_login").value;
+		var status_reg = document.getElementById("status_reg").value;
+		
+		if(status_login == "failed") {
+			swal("Error", "Login failed, wrong email and password combination", "error");
+		}
+		
+		if(status_reg == "success"){
+			swal("Success", "Account created successfully!", "success");
+		}
+		if(status_reg == "failed"){
+			swal("Error", "Registration failed", "error");
+		}
+	</script>
 </body>
 
 </html>
