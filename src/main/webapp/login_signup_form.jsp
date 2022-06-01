@@ -134,6 +134,7 @@
 
     <script src="static/js/login_signup_script.js"></script>
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	<!-- <script src="static/js/employee_authorization_process.js"></script> -->
 	
 	<script type="text/javascript">
 		var status_login = document.getElementById("status_login").value;

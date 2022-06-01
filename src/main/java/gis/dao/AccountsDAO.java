@@ -89,7 +89,7 @@ public class AccountsDAO extends EncryptPassword{
 			rs = pst.executeQuery();
 			
 			
-			if(rs.next()) {
+			while(rs.next()) {
 				if(rs.getString("email").equals(acc.getEmail())) {
 					if(rs.getString("password").equals(getHash(acc.getPassword().getBytes(), "MD5"))) {
 						employeeName = String.format("%s %s",rs.getString("first_name"), rs.getString("last_name"));
