@@ -76,7 +76,7 @@ function load_layer() {
         var color = [[254, 217, 118, 0.7], [254, 178, 76, 0.7], [253, 141, 60, 0.7], [252, 78, 42, 0.7], [227, 26, 28, 0.7], [189, 0, 38, 0.7], [128, 0, 38, 0.7]];
 
         getStyle1 = function (feature, resolution) {
-
+        	
             for (i = 0; i < 7; i++) {
 
                 if (feature.get([value_param]) > (i * diff) && feature.get([value_param]) <= ((i + 1) * diff)) {
