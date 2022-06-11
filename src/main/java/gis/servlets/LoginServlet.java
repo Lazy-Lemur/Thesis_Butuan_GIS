@@ -41,7 +41,7 @@ public class LoginServlet extends HttpServlet {
 			
 			if(userExists) {
 				session.setAttribute("name", employeeName);
-				dispatcher = request.getRequestDispatcher("database.jsp");
+				dispatcher = request.getRequestDispatcher("main_gis.html");
 			} else {
 				request.setAttribute("status_login", "failed");
 				dispatcher = request.getRequestDispatcher("login_signup_form.jsp");
