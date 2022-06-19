@@ -281,17 +281,17 @@
     <div id="uploadDataModal" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Upload Geodata CSV</h4>
-                    <span class="close" data-bs-dismiss="modal" aria-hidden="true" ><i class="material-icons">&#xe5cd;</i></span>
-                </div>
-                <div class="modal-body">
-                    <input type="file" class="form-control" name="chooseFile" id="chooseFile" accept=".csv" multiple/>
-                </div>
-                <div class="modal-footer">
-                    <input type="button" value="Cancel" class="btn btn-danger" data-bs-dismiss="modal">
-                    <input type="submit" value="Upload Data" id="upload-submit" class="btn btn-info">
-                </div>
+	                <div class="modal-header">
+	                    <h4 class="modal-title">Upload Geodata CSV</h4>
+	                    <span class="close" data-bs-dismiss="modal" aria-hidden="true" ><i class="material-icons">&#xe5cd;</i></span>
+	                </div>
+	                <div class="modal-body">
+	                	<input type="file" class="form-control" required name="chooseFile" id="chooseFile" accept=".csv" multiple/>
+	                </div>
+	                <div class="modal-footer">
+	                    <input type="button" value="Cancel" class="btn btn-danger" data-bs-dismiss="modal">
+	                    <input type="submit" value="Upload Data" id="upload-submit" class="btn btn-info">
+	                </div>
             </div>
         </div>
     </div>

@@ -330,6 +330,47 @@ $(document).ready(function () {
         //     existing_dataset_interval(cells);
         // }
     }
+    
+    async function uploadFile(){
+    	let formData = new FormData();
+    	formData.append("file", chooseFile.files[0]);
+    	console.log(chooseFile.files[0]);
+    	await fetch('uploadservlet', {
+    		method: "POST",
+    		body: formData
+    	});
+    	$('#uploadDataModal').modal('hide');
+    	$('#promptModal #message').html("Geodata CSV uploaded successfully.");
+        $('#promptModal .modal-title').html("Upload Success");
+        setTimeout($("#promptModal").modal('show'), 700);
+        setTimeout(location.reload.bind(location), 2000);
+    }
+    
+    function uploadCSVData(){
+    	let formData = new FormData();
+    	formData.append("file", chooseFile.files[0]);
+    	
+    	$.ajax({
+    		url: "uploadservlet",
+    		type: "POST",
+    		data: {
+    			file: formData
+    		}, 
+    		success: function(data){
+    			console.log(data);
+    			$('#uploadDataModal').modal('hide');
+                if (data) {
+                    $('#promptModal #message').html("Geodata CSV uploaded successfully.");
+                    $('#promptModal .modal-title').html("Upload Success");
+                } else {
+                    $('#promptModal #message').html("Failed to upload geodata CSV.");
+                    $('#promptModal .modal-title').html("Upload Failed");
+                }
+                setTimeout($("#promptModal").modal('show'), 700);
+                setTimeout(location.reload.bind(location), 2000);
+    		}
+    	});
+    }
 
     function dynamic_upload(filepath) {
         $.ajax({
@@ -470,6 +511,7 @@ $(document).ready(function () {
             }
         });
     }
+    
 
     var load_delete_all = function () {
         var btn = $(this);
@@ -519,5 +561,5 @@ $(document).ready(function () {
 
     /** Upload CSV */
     $('.js-upload-csv-geodata').click(load_upload_modal);
-    $('#uploadDataModal #upload-submit').on('click', read_csv);
+    $('#uploadDataModal #upload-submit').on('click', uploadFile);
 });

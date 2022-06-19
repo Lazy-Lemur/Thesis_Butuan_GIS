@@ -1,5 +1,7 @@
 package gis.dao;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -74,6 +76,56 @@ public class AccountsDAO extends EncryptPassword{
 			close(pst, rs, myConn);
 		}
 		
+		return false;
+	}
+	
+	public boolean uploadCSV(String filePath) throws SQLException {
+		PreparedStatement pst = null;
+		int rows = 0;
+		try {
+			myConn.setAutoCommit(false);
+			BufferedReader lineReader = new BufferedReader(new FileReader(filePath));
+			String lineText = null;
+			int count = 0;
+			lineReader.readLine();
+			while((lineText=lineReader.readLine()) != null) {
+				String[] data = lineText.split(",");
+				
+				String brgy = data[1];
+				int population = Integer.parseInt(data[2]);
+				int employed = Integer.parseInt(data[3]);
+				int unemployed = Integer.parseInt(data[4]);
+				int underemployed = Integer.parseInt(data[5]);
+				int year = Integer.parseInt(data[6]);
+				
+				pst = myConn.prepareStatement("INSERT INTO dynamic_table(brgy, population, employed, unemployed, underemployed, year) "
+						+ "VALUES (?, ? ,?, ?, ?, ?);");
+				
+				pst.setString(1, brgy);
+				pst.setInt(2, population);
+				pst.setInt(3, employed);
+				pst.setInt(4, unemployed);
+				pst.setInt(5, underemployed);
+				pst.setInt(6, year);
+				
+				rows = pst.executeUpdate();
+				pst.close();
+			}
+			
+				lineReader.close();
+				myConn.commit();
+				
+				if(rows > 0) {
+					return true;
+				} else {
+					return false;
+				}
+				
+			} catch(Exception exc) {
+				exc.printStackTrace();
+			} finally {
+				close(null, null, myConn);
+			}
 		return false;
 	}
 	
